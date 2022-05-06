@@ -1,0 +1,13 @@
+{
+    "log": {
+        "path": "D:\\Log",
+        "level": "DEBUG",
+        "rotation": "1 day",
+        "retention": "30 days"
+    },
+    "binance": {
+        "binance_api_url": "https://api.binance.com/sapi/v1",
+        "binance_api_key": "qzpdfQO6fNWYhoOkLK2qduwwVf9fQ5PpzccEoJra4oXSKC54KETAXr7iMRYbFJhZ",
+        "binance_secret_key": "F8Og8K3bSDZkltRQwrThVd9fRrAqXMOdAm5lx7DW5PyIR1Q7FDBwCYmq3JCFnXFl"
+    }
+}
