@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QSizePolicy, QSplitter, QTabWidget,
-    QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QPushButton, QSizePolicy, QSplitter,
+    QTabWidget, QTextEdit, QVBoxLayout, QWidget)
 import resources_rc
 
 class Ui_MainForm(object):
@@ -52,15 +52,24 @@ class Ui_MainForm(object):
         self.tabWidget = QTabWidget(self.splitter)
         self.tabWidget.setObjectName(u"tabWidget")
         self.tabWidget.setMinimumSize(QSize(0, 300))
-        self.tab = QWidget()
-        self.tab.setObjectName(u"tab")
-        self.textEdit_2 = QTextEdit(self.tab)
-        self.textEdit_2.setObjectName(u"textEdit_2")
-        self.textEdit_2.setGeometry(QRect(90, 20, 104, 71))
-        self.tabWidget.addTab(self.tab, "")
-        self.tab_2 = QWidget()
-        self.tab_2.setObjectName(u"tab_2")
-        self.tabWidget.addTab(self.tab_2, "")
+        self.tab_config = QWidget()
+        self.tab_config.setObjectName(u"tab_config")
+        self.pushButton = QPushButton(self.tab_config)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setGeometry(QRect(40, 180, 141, 24))
+        self.tabWidget.addTab(self.tab_config, "")
+        self.tab_spot_history_data = QWidget()
+        self.tab_spot_history_data.setObjectName(u"tab_spot_history_data")
+        self.pushButtonSymbolsLoad = QPushButton(self.tab_spot_history_data)
+        self.pushButtonSymbolsLoad.setObjectName(u"pushButtonSymbolsLoad")
+        self.pushButtonSymbolsLoad.setGeometry(QRect(30, 30, 141, 24))
+        self.tabWidget.addTab(self.tab_spot_history_data, "")
+        self.tab_futures_history_data = QWidget()
+        self.tab_futures_history_data.setObjectName(u"tab_futures_history_data")
+        self.tabWidget.addTab(self.tab_futures_history_data, "")
+        self.tab_futures_order_book_level_2 = QWidget()
+        self.tab_futures_order_book_level_2.setObjectName(u"tab_futures_order_book_level_2")
+        self.tabWidget.addTab(self.tab_futures_order_book_level_2, "")
         self.splitter.addWidget(self.tabWidget)
         self.textEdit = QTextEdit(self.splitter)
         self.textEdit.setObjectName(u"textEdit")
@@ -74,12 +83,19 @@ class Ui_MainForm(object):
 
         self.retranslateUi(MainForm)
 
+        self.tabWidget.setCurrentIndex(1)
+
+
         QMetaObject.connectSlotsByName(MainForm)
     # setupUi
 
     def retranslateUi(self, MainForm):
         MainForm.setWindowTitle(QCoreApplication.translate("MainForm", u"Binance Downloader", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainForm", u"Tab 1", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainForm", u"Tab 2", None))
+        self.pushButton.setText(QCoreApplication.translate("MainForm", u"Download All Symbols", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_config), QCoreApplication.translate("MainForm", u"Config", None))
+        self.pushButtonSymbolsLoad.setText(QCoreApplication.translate("MainForm", u"Load", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_spot_history_data), QCoreApplication.translate("MainForm", u"Spot History Data", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_futures_history_data), QCoreApplication.translate("MainForm", u"Futures History Data", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_futures_order_book_level_2), QCoreApplication.translate("MainForm", u"Futures Order Book Leve 2", None))
     # retranslateUi
 
