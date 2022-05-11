@@ -10,7 +10,7 @@
             "request": "launch",
             "stopOnEntry": false,
             "python": "${command:python.interpreterPath}",
-            "program": "${workspaceFolder}/src/main.py",
+            "program": "${workspaceFolder}/quant/main.py",
             // "program": "${file}",
             "env": { "PYTHONPATH": "${workspaceRoot}" }
         }

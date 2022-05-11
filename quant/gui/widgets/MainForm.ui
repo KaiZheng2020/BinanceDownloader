@@ -10,6 +10,12 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
     <width>800</width>
@@ -21,672 +27,580 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../resources/resources.qrc">
-    <normaloff>:/icon/logo.ico</normaloff>:/icon/logo.ico</iconset>
+    <normaloff>:/logo/logo.png</normaloff>:/logo/logo.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetMaximumSize</enum>
+   </property>
    <item>
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QSplitter" name="splitter">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QSplitter" name="splitter">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="handleWidth">
+      <number>5</number>
+     </property>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>320</height>
+       </size>
+      </property>
+      <property name="tabShape">
+       <enum>QTabWidget::Triangular</enum>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_HistoryData">
+       <attribute name="title">
+        <string>Trading History Data</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_main">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_up" stretch="1,1,1">
+            <item>
+             <widget class="QGroupBox" name="groupBox_TradingType">
+              <property name="title">
+               <string>Trading Type</string>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_7">
+               <item>
+                <widget class="QCheckBox" name="checkBox_spot">
+                 <property name="text">
+                  <string>spot</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="checkBox_um">
+                 <property name="text">
+                  <string>um</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="checkBox_cm">
+                 <property name="text">
+                  <string>cm</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_DataType">
+              <property name="title">
+               <string>Data Type</string>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <item>
+                <widget class="QCheckBox" name="checkBox_Kline">
+                 <property name="text">
+                  <string>kline</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="checkBox_AggTrade">
+                 <property name="text">
+                  <string>aggTrade</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="checkBox_Trade">
+                 <property name="text">
+                  <string>trade</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_Interval">
+              <property name="title">
+               <string>Interval</string>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <item>
+                <widget class="QCheckBox" name="checkBox_1m">
+                 <property name="text">
+                  <string>1 minute</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="checkBox_1h">
+                 <property name="text">
+                  <string>1 hour</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="checkBox_1d">
+                 <property name="text">
+                  <string>1 day</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_mid" stretch="2,1">
+            <item>
+             <widget class="QGroupBox" name="groupBox_DateRange">
+              <property name="title">
+               <string>Date Range</string>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,2,1,2">
+               <item>
+                <widget class="QLabel" name="label_StartDate">
+                 <property name="text">
+                  <string>Start Date</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDateEdit" name="dateEdit_StartDate">
+                 <property name="dateTime">
+                  <datetime>
+                   <hour>0</hour>
+                   <minute>0</minute>
+                   <second>1</second>
+                   <year>2022</year>
+                   <month>1</month>
+                   <day>1</day>
+                  </datetime>
+                 </property>
+                 <property name="time">
+                  <time>
+                   <hour>0</hour>
+                   <minute>0</minute>
+                   <second>1</second>
+                  </time>
+                 </property>
+                 <property name="calendarPopup">
+                  <bool>true</bool>
+                 </property>
+                 <property name="date">
+                  <date>
+                   <year>2022</year>
+                   <month>1</month>
+                   <day>1</day>
+                  </date>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_EndDate">
+                 <property name="text">
+                  <string>End Date</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDateEdit" name="dateEdit_EndDate">
+                 <property name="dateTime">
+                  <datetime>
+                   <hour>0</hour>
+                   <minute>0</minute>
+                   <second>0</second>
+                   <year>2021</year>
+                   <month>12</month>
+                   <day>26</day>
+                  </datetime>
+                 </property>
+                 <property name="time">
+                  <time>
+                   <hour>0</hour>
+                   <minute>0</minute>
+                   <second>0</second>
+                  </time>
+                 </property>
+                 <property name="calendarPopup">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_Proxy">
+              <property name="title">
+               <string>Proxy</string>
+              </property>
+              <property name="checkable">
+               <bool>false</bool>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_3">
+               <item>
+                <widget class="QCheckBox" name="checkBox_Proxy">
+                 <property name="text">
+                  <string>Addr</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_Proxy">
+                 <property name="toolTip">
+                  <string/>
+                 </property>
+                 <property name="statusTip">
+                  <string/>
+                 </property>
+                 <property name="whatsThis">
+                  <string/>
+                 </property>
+                 <property name="inputMask">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_down" stretch="2,1">
+            <item>
+             <widget class="QGroupBox" name="groupBox_Controller">
+              <property name="title">
+               <string>Controller</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_Step1">
+                 <property name="text">
+                  <string>Step 1</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_Step2">
+                 <property name="text">
+                  <string>Step 2</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1" colspan="2">
+                <widget class="QPushButton" name="pushButton_SetSavePath">
+                 <property name="text">
+                  <string>Set Save Path</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_Step3">
+                 <property name="text">
+                  <string>Step 3</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QPushButton" name="pushButton_DownloaderStart">
+                 <property name="text">
+                  <string>Start</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="pushButton_DownloadSymbols">
+                 <property name="text">
+                  <string>Download Symbols</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QPushButton" name="pushButton_LoadSymbols">
+                 <property name="text">
+                  <string>Load Symbols</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <widget class="QPushButton" name="pushButton_DownloaderStop">
+                 <property name="text">
+                  <string>Stop</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_Timer">
+              <property name="title">
+               <string>Timer (Auto Download Last Day's Data)</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_Timer">
+               <item row="0" column="2">
+                <widget class="QPushButton" name="pushButton_TimerStop">
+                 <property name="text">
+                  <string>Stop</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QTimeEdit" name="timeEdit_Timer"/>
+               </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="pushButton_TimerStart">
+                 <property name="text">
+                  <string>Start</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_FuturesOrderBookLevel2">
+       <attribute name="title">
+        <string>Futures Order Book Leve 2</string>
+       </attribute>
+       <widget class="QGroupBox" name="groupBoxFutures">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>50</y>
+          <width>601</width>
+          <height>91</height>
+         </rect>
         </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
+        <property name="title">
+         <string>Futures Order Book Level 2</string>
         </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="handleWidth">
-         <number>5</number>
-        </property>
-        <widget class="QTabWidget" name="tabWidget">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>300</height>
-          </size>
+        <widget class="QPushButton" name="pushButtonFuturesOrderBookSpiderStart">
+         <property name="geometry">
+          <rect>
+           <x>510</x>
+           <y>60</y>
+           <width>81</width>
+           <height>24</height>
+          </rect>
          </property>
-         <property name="currentIndex">
-          <number>1</number>
+         <property name="text">
+          <string>Start</string>
          </property>
-         <widget class="QWidget" name="tab_config">
-          <attribute name="title">
-           <string>Config</string>
-          </attribute>
-          <widget class="QPushButton" name="pushButton">
-           <property name="geometry">
-            <rect>
-             <x>40</x>
-             <y>180</y>
-             <width>141</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Download All Symbols</string>
-           </property>
-          </widget>
-         </widget>
-         <widget class="QWidget" name="tab_spot_history_data">
-          <attribute name="title">
-           <string>Spot History Data</string>
-          </attribute>
-          <widget class="QPushButton" name="pushButtonSymbolsLoad">
-           <property name="geometry">
-            <rect>
-             <x>60</x>
-             <y>250</y>
-             <width>141</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Load</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="pushButtonSoptsSpiderStart">
-           <property name="geometry">
-            <rect>
-             <x>270</x>
-             <y>250</y>
-             <width>81</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Start</string>
-           </property>
-          </widget>
-          <widget class="QGroupBox" name="groupBoxDataType">
-           <property name="geometry">
-            <rect>
-             <x>30</x>
-             <y>90</y>
-             <width>201</width>
-             <height>51</height>
-            </rect>
-           </property>
-           <property name="title">
-            <string>Data Type</string>
-           </property>
-           <widget class="QCheckBox" name="checkBoxSpotTrade">
-            <property name="geometry">
-             <rect>
-              <x>140</x>
-              <y>20</y>
-              <width>61</width>
-              <height>20</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>trade</string>
-            </property>
-           </widget>
-           <widget class="QCheckBox" name="checkBoxSpotKline">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>20</y>
-              <width>51</width>
-              <height>20</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>kline</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-           <widget class="QCheckBox" name="checkBoxSpotAggTrade">
-            <property name="geometry">
-             <rect>
-              <x>60</x>
-              <y>20</y>
-              <width>79</width>
-              <height>20</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>aggTrade</string>
-            </property>
-           </widget>
-          </widget>
-          <widget class="QDateEdit" name="dateEditSpotBeginDate">
-           <property name="geometry">
-            <rect>
-             <x>110</x>
-             <y>150</y>
-             <width>110</width>
-             <height>22</height>
-            </rect>
-           </property>
-           <property name="calendarPopup">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QDateEdit" name="dateEditSpotEndDate">
-           <property name="geometry">
-            <rect>
-             <x>310</x>
-             <y>150</y>
-             <width>110</width>
-             <height>22</height>
-            </rect>
-           </property>
-           <property name="calendarPopup">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QLabel" name="labelEndDate">
-           <property name="geometry">
-            <rect>
-             <x>240</x>
-             <y>160</y>
-             <width>71</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>End Date</string>
-           </property>
-          </widget>
-          <widget class="QGroupBox" name="groupBoxInterval">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>30</y>
-             <width>411</width>
-             <height>51</height>
-            </rect>
-           </property>
-           <property name="title">
-            <string>Interval</string>
-           </property>
-           <widget class="QCheckBox" name="checkBoxSpot1d">
-            <property name="geometry">
-             <rect>
-              <x>90</x>
-              <y>20</y>
-              <width>41</width>
-              <height>20</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>1d</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-           <widget class="QCheckBox" name="checkBoxSpot1m">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>20</y>
-              <width>51</width>
-              <height>20</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>1m</string>
-            </property>
-           </widget>
-           <widget class="QCheckBox" name="checkBoxSpot1h">
-            <property name="geometry">
-             <rect>
-              <x>50</x>
-              <y>20</y>
-              <width>51</width>
-              <height>20</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>1h</string>
-            </property>
-           </widget>
-          </widget>
-          <widget class="QLabel" name="labelBeginDate">
-           <property name="geometry">
-            <rect>
-             <x>40</x>
-             <y>160</y>
-             <width>71</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Begin Date</string>
-           </property>
-          </widget>
-         </widget>
-         <widget class="QWidget" name="tab_futures_history_data">
-          <attribute name="title">
-           <string>Futures History Data</string>
-          </attribute>
-          <widget class="QGroupBox" name="groupBoxSpots_2">
-           <property name="geometry">
-            <rect>
-             <x>30</x>
-             <y>50</y>
-             <width>601</width>
-             <height>121</height>
-            </rect>
-           </property>
-           <property name="title">
-            <string>Futures History Data</string>
-           </property>
-           <widget class="QGroupBox" name="groupBoxDataType_2">
-            <property name="geometry">
-             <rect>
-              <x>200</x>
-              <y>20</y>
-              <width>191</width>
-              <height>51</height>
-             </rect>
-            </property>
-            <property name="title">
-             <string>Data Type</string>
-            </property>
-            <widget class="QCheckBox" name="checkBoxFuturesTrade">
-             <property name="geometry">
-              <rect>
-               <x>140</x>
-               <y>20</y>
-               <width>61</width>
-               <height>20</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string>trade</string>
-             </property>
-            </widget>
-            <widget class="QCheckBox" name="checkBoxFuturesKline">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>20</y>
-               <width>51</width>
-               <height>20</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string>kline</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-            <widget class="QCheckBox" name="checkBoxFuturesAggTrade">
-             <property name="geometry">
-              <rect>
-               <x>60</x>
-               <y>20</y>
-               <width>79</width>
-               <height>20</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string>aggTrade</string>
-             </property>
-            </widget>
-           </widget>
-           <widget class="QGroupBox" name="groupBoxInterval_2">
-            <property name="geometry">
-             <rect>
-              <x>60</x>
-              <y>20</y>
-              <width>131</width>
-              <height>51</height>
-             </rect>
-            </property>
-            <property name="title">
-             <string>Interval</string>
-            </property>
-            <widget class="QCheckBox" name="checkBoxFutures1d">
-             <property name="geometry">
-              <rect>
-               <x>90</x>
-               <y>20</y>
-               <width>41</width>
-               <height>20</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string>1d</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-            <widget class="QCheckBox" name="checkBoxFutures1m">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>20</y>
-               <width>51</width>
-               <height>20</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string>1m</string>
-             </property>
-            </widget>
-            <widget class="QCheckBox" name="checkBoxFutures1h">
-             <property name="geometry">
-              <rect>
-               <x>50</x>
-               <y>20</y>
-               <width>51</width>
-               <height>20</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string>1h</string>
-             </property>
-            </widget>
-           </widget>
-           <widget class="QPushButton" name="pushButtonFuturesSpiderStart">
-            <property name="geometry">
-             <rect>
-              <x>510</x>
-              <y>80</y>
-              <width>81</width>
-              <height>24</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Start</string>
-            </property>
-           </widget>
-           <widget class="QLineEdit" name="lineEditFuturesSymbolsFilePath">
-            <property name="geometry">
-             <rect>
-              <x>70</x>
-              <y>80</y>
-              <width>341</width>
-              <height>21</height>
-             </rect>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pushButtonFuturesSymbolsFileLoad">
-            <property name="geometry">
-             <rect>
-              <x>420</x>
-              <y>80</y>
-              <width>81</width>
-              <height>24</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Load</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="labelSymbolsFile_2">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>80</y>
-              <width>61</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Symbols</string>
-            </property>
-           </widget>
-           <widget class="QDateEdit" name="dateEditFuturesEndDate">
-            <property name="geometry">
-             <rect>
-              <x>480</x>
-              <y>50</y>
-              <width>110</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
-            </property>
-           </widget>
-           <widget class="QDateEdit" name="dateEditFuturesBeginDate">
-            <property name="geometry">
-             <rect>
-              <x>480</x>
-              <y>20</y>
-              <width>110</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
-            </property>
-           </widget>
-           <widget class="QLabel" name="labelBeginDate_2">
-            <property name="geometry">
-             <rect>
-              <x>410</x>
-              <y>30</y>
-              <width>71</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Begin Date</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="labelEndDate_2">
-            <property name="geometry">
-             <rect>
-              <x>410</x>
-              <y>50</y>
-              <width>71</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>End Date</string>
-            </property>
-           </widget>
-           <widget class="QCheckBox" name="checkBoxFuturesum">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>30</y>
-              <width>51</width>
-              <height>20</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>um</string>
-            </property>
-           </widget>
-           <widget class="QCheckBox" name="checkBoxFuturescm">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>50</y>
-              <width>61</width>
-              <height>20</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>cm</string>
-            </property>
-           </widget>
-          </widget>
-         </widget>
-         <widget class="QWidget" name="tab_futures_order_book_level_2">
-          <attribute name="title">
-           <string>Futures Order Book Leve 2</string>
-          </attribute>
-          <widget class="QGroupBox" name="groupBoxFutures">
-           <property name="geometry">
-            <rect>
-             <x>50</x>
-             <y>50</y>
-             <width>601</width>
-             <height>91</height>
-            </rect>
-           </property>
-           <property name="title">
-            <string>Futures Order Book Level 2</string>
-           </property>
-           <widget class="QPushButton" name="pushButtonFuturesOrderBookSpiderStart">
-            <property name="geometry">
-             <rect>
-              <x>510</x>
-              <y>60</y>
-              <width>81</width>
-              <height>24</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Start</string>
-            </property>
-           </widget>
-           <widget class="QDateTimeEdit" name="dateTimeFuturesOrderBookEditEndDateTime">
-            <property name="geometry">
-             <rect>
-              <x>290</x>
-              <y>60</y>
-              <width>141</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="date">
-             <date>
-              <year>2022</year>
-              <month>1</month>
-              <day>1</day>
-             </date>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
-            </property>
-           </widget>
-           <widget class="QLabel" name="labelEndTime">
-            <property name="geometry">
-             <rect>
-              <x>250</x>
-              <y>60</y>
-              <width>21</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>To</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="labelBeginTime">
-            <property name="geometry">
-             <rect>
-              <x>250</x>
-              <y>30</y>
-              <width>31</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>From</string>
-            </property>
-           </widget>
-           <widget class="QDateTimeEdit" name="dateTimeEditFuturesOrderBookBeginDateTime">
-            <property name="geometry">
-             <rect>
-              <x>290</x>
-              <y>30</y>
-              <width>141</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="dateTime">
-             <datetime>
-              <hour>0</hour>
-              <minute>0</minute>
-              <second>0</second>
-              <year>2021</year>
-              <month>1</month>
-              <day>1</day>
-             </datetime>
-            </property>
-            <property name="date">
-             <date>
-              <year>2021</year>
-              <month>1</month>
-              <day>1</day>
-             </date>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
-            </property>
-           </widget>
-           <widget class="QLineEdit" name="lineEditSecretKey">
-            <property name="geometry">
-             <rect>
-              <x>80</x>
-              <y>60</y>
-              <width>161</width>
-              <height>21</height>
-             </rect>
-            </property>
-           </widget>
-           <widget class="QLineEdit" name="lineEditAPIKey">
-            <property name="geometry">
-             <rect>
-              <x>80</x>
-              <y>30</y>
-              <width>161</width>
-              <height>21</height>
-             </rect>
-            </property>
-           </widget>
-           <widget class="QLabel" name="labelSecretKey">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>60</y>
-              <width>71</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Secret Key</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="labelAPIKey">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>30</y>
-              <width>51</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>API Key</string>
-            </property>
-           </widget>
-          </widget>
-         </widget>
         </widget>
-        <widget class="QTextEdit" name="textEdit"/>
+        <widget class="QDateTimeEdit" name="dateTimeFuturesOrderBookEditEndDateTime">
+         <property name="geometry">
+          <rect>
+           <x>290</x>
+           <y>60</y>
+           <width>141</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="date">
+          <date>
+           <year>2022</year>
+           <month>1</month>
+           <day>1</day>
+          </date>
+         </property>
+         <property name="calendarPopup">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="labelEndTime">
+         <property name="geometry">
+          <rect>
+           <x>250</x>
+           <y>60</y>
+           <width>21</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>To</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="labelBeginTime">
+         <property name="geometry">
+          <rect>
+           <x>250</x>
+           <y>30</y>
+           <width>31</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>From</string>
+         </property>
+        </widget>
+        <widget class="QDateTimeEdit" name="dateTimeEditFuturesOrderBookBeginDateTime">
+         <property name="geometry">
+          <rect>
+           <x>290</x>
+           <y>30</y>
+           <width>141</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="dateTime">
+          <datetime>
+           <hour>0</hour>
+           <minute>0</minute>
+           <second>0</second>
+           <year>2021</year>
+           <month>1</month>
+           <day>1</day>
+          </datetime>
+         </property>
+         <property name="date">
+          <date>
+           <year>2021</year>
+           <month>1</month>
+           <day>1</day>
+          </date>
+         </property>
+         <property name="calendarPopup">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditSecretKey">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>60</y>
+           <width>161</width>
+           <height>21</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditAPIKey">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>30</y>
+           <width>161</width>
+           <height>21</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="labelSecretKey">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>60</y>
+           <width>71</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Secret Key</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="labelAPIKey">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>30</y>
+           <width>51</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>API Key</string>
+         </property>
+        </widget>
        </widget>
-      </item>
-     </layout>
+      </widget>
+      <widget class="QWidget" name="tab_Utility">
+       <attribute name="title">
+        <string>CSV Utility</string>
+       </attribute>
+       <widget class="QGroupBox" name="groupBox_CSV2Feature">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>70</y>
+          <width>481</width>
+          <height>80</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>CSV to Feature</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_About">
+       <attribute name="title">
+        <string>About</string>
+       </attribute>
+      </widget>
+     </widget>
+     <widget class="QTextEdit" name="textEdit_Log">
+      <property name="font">
+       <font>
+        <family>Courier New</family>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string/>
+      </property>
+     </widget>
     </widget>
    </item>
   </layout>

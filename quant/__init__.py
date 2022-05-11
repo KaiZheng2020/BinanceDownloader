@@ -12,7 +12,7 @@ CONFIG_PATH = os.path.dirname(os.path.abspath(__file__))
 
 def init_log():
 
-    log_path = g_config['LOG_PATH']
+    log_path = g_config['log']['path']
 
     if not os.path.exists(log_path):
         os.mkdir(log_path)

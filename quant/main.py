@@ -12,7 +12,7 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
 
-    app.setWindowIcon(QIcon('/gui/resources/logo/logo.png'))
+    app.setWindowIcon(QIcon('./gui/resources/logo/logo.png'))
 
     main = MainForm()
     main.show()

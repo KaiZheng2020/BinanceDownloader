@@ -4,6 +4,7 @@ logs
 *.pyc
 *.pyo
 *.egg-info/
+__pycache__
 
 # Jupyter
 .ipynb_checkpoints

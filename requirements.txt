@@ -6,3 +6,4 @@ pandas
 multiprocess
 Send2Trash
 pyinstaller
+tabulate
