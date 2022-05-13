@@ -34,22 +34,22 @@ def get_all_symbols(type):
     return list(map(lambda symbol: symbol['symbol'], json.loads(response)['symbols']))
 
 
-def download_file(base_path, file_name, date_range=None, folder=None):
+def download_file(base_path, save_path, file_name, date_range=None, folder=None):
     download_path = "{}{}".format(base_path, file_name)
     if folder:
-        base_path = os.path.join(folder, base_path)
+        save_path = os.path.join(folder, save_path)
     # if date_range:
     #     date_range = date_range.replace(" ", "_")
     #     base_path = os.path.join(base_path, date_range)
-    save_path = get_destination_dir(os.path.join(base_path, file_name), folder)
 
-    if os.path.exists(save_path):
-        print("\nfile already exists! {}".format(save_path))
+    save_file_path = get_destination_dir(os.path.join(save_path, file_name), folder)
+    if os.path.exists(save_file_path):
+        print("\nfile already exists! {}".format(save_file_path))
         return
 
     # make the directory
-    if not os.path.exists(base_path):
-        Path(get_destination_dir(base_path)).mkdir(parents=True, exist_ok=True)
+    if not os.path.exists(save_path):
+        Path(get_destination_dir(save_path)).mkdir(parents=True, exist_ok=True)
 
     try:
         download_url = get_download_url(download_path)
@@ -59,9 +59,9 @@ def download_file(base_path, file_name, date_range=None, folder=None):
             length = int(length)
             blocksize = max(4096, length // 100)
 
-        with open(save_path, 'wb') as out_file:
+        with open(save_file_path, 'wb') as out_file:
             dl_progress = 0
-            print("\nFile Download: {}".format(save_path))
+            print("\nFile Download: {}".format(save_file_path))
             while True:
                 buf = dl_file.read(blocksize)
                 if not buf:
@@ -119,6 +119,17 @@ def get_path(trading_type, market_data_type, time_period, symbol, interval=None)
         path = f'{trading_type_path}/{time_period}/{market_data_type}/{symbol.upper()}/{interval}/'
     else:
         path = f'{trading_type_path}/{time_period}/{market_data_type}/{symbol.upper()}/'
+    return path
+
+
+def get_save_path(trading_type, market_data_type, symbol, interval=None):
+    trading_type_path = 'Spot'
+    if trading_type != 'spot':
+        trading_type_path = f'Futures/{trading_type}'
+    if interval is not None:
+        path = f'{trading_type_path}/{market_data_type}/{interval}/{symbol.upper()}/'
+    else:
+        path = f'{trading_type_path}/{market_data_type}/{symbol.upper()}/'
     return path
 
 

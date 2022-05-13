@@ -9,7 +9,7 @@ from sympy import N
 from tabulate import tabulate
 
 
-class Config():
+class HistoryDownloadConfig():
     def __init__(self,
                  trading_type_list,
                  symbol_list,
@@ -49,7 +49,7 @@ class Config():
         return tabulate(table, tablefmt='grid')
 
 
-def download(config: Config):
+def download(config: HistoryDownloadConfig):
 
     for trading_type in config.trading_type_list:
         for data_type in config.data_type_list:
@@ -71,11 +71,13 @@ def download(config: Config):
                     elif data_type == 'aggTrade':
                         downloader = importlib.import_module('quant.binance.python.download-aggTrade')
                         downloader.download_daily_aggTrades(trading_type, [symbol], 1, dates, config.date_start,
-                                                            config.date_end, self.config.save_path, False)
+                                                            config.date_end, config.save_path, False)
+
                     elif data_type == 'trade':
                         downloader = importlib.import_module('quant.binance.python.download-trade')
                         downloader.download_daily_trades(trading_type, [symbol], 1, dates, config.date_start, config.date_end,
                                                          config.save_path, False)
+
                     else:
                         logger.error(f'unsupport data type: {data_type}')
 
@@ -83,21 +85,20 @@ def download(config: Config):
                     logger.error(ex)
 
 
-class Worker(Thread):
-    def __init__(self, config):
-        super(Worker, self).__init__()
+class HistoryDownloadWorker(Thread):
+    def __init__(self, config: HistoryDownloadConfig):
+        super(HistoryDownloadWorker, self).__init__()
 
         self.config = config
-        self.thread_flag = False
 
     def run(self):
         download(self.config)
         logger.info(f'worker thread has exited.')
 
 
-class WorkerTimer(Thread):
+class HistoryDownloadTimer(Thread):
     def __init__(self, config, clock):
-        super(Worker, self).__init__()
+        super(HistoryDownloadTimer, self).__init__()
 
         self.config = config
         self.thread_flag = False

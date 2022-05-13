@@ -64,7 +64,7 @@
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="tab_HistoryData">
        <attribute name="title">
@@ -244,7 +244,7 @@
                    <second>0</second>
                    <year>2021</year>
                    <month>12</month>
-                   <day>26</day>
+                   <day>23</day>
                   </datetime>
                  </property>
                  <property name="time">
@@ -313,34 +313,7 @@
                <string>Controller</string>
               </property>
               <layout class="QGridLayout" name="gridLayout">
-               <item row="0" column="0">
-                <widget class="QLabel" name="label_Step1">
-                 <property name="text">
-                  <string>Step 1</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="label_Step2">
-                 <property name="text">
-                  <string>Step 2</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1" colspan="2">
-                <widget class="QPushButton" name="pushButton_SetSavePath">
-                 <property name="text">
-                  <string>Set Save Path</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
+               <item row="2" column="1">
                 <widget class="QLabel" name="label_Step3">
                  <property name="text">
                   <string>Step 3</string>
@@ -350,28 +323,55 @@
                  </property>
                 </widget>
                </item>
-               <item row="2" column="1">
-                <widget class="QPushButton" name="pushButton_DownloaderStart">
-                 <property name="text">
-                  <string>Start</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
+               <item row="0" column="2">
                 <widget class="QPushButton" name="pushButton_DownloadSymbols">
                  <property name="text">
                   <string>Download Symbols</string>
                  </property>
                 </widget>
                </item>
-               <item row="0" column="2">
+               <item row="2" column="2">
+                <widget class="QPushButton" name="pushButton_DownloaderStart">
+                 <property name="text">
+                  <string>Start</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2" colspan="2">
+                <widget class="QPushButton" name="pushButton_SetSavePath">
+                 <property name="text">
+                  <string>Set Save Path</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="label_Step2">
+                 <property name="text">
+                  <string>Step 2</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
                 <widget class="QPushButton" name="pushButton_LoadSymbols">
                  <property name="text">
                   <string>Load Symbols</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="2">
+               <item row="0" column="1">
+                <widget class="QLabel" name="label_Step1">
+                 <property name="text">
+                  <string>Step 1</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="3">
                 <widget class="QPushButton" name="pushButton_DownloaderStop">
                  <property name="text">
                   <string>Stop</string>
@@ -566,28 +566,342 @@
         </widget>
        </widget>
       </widget>
-      <widget class="QWidget" name="tab_Utility">
+      <widget class="QWidget" name="tab_Realtime">
        <attribute name="title">
-        <string>CSV Utility</string>
+        <string>Real-Time Data</string>
        </attribute>
-       <widget class="QGroupBox" name="groupBox_CSV2Feature">
+      </widget>
+      <widget class="QWidget" name="tab_Parser">
+       <attribute name="title">
+        <string>File Parser</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="3,3,3">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_FileParserUp">
+          <item>
+           <widget class="QGroupBox" name="groupBox_Path">
+            <property name="title">
+             <string>Path</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_Des">
+               <property name="text">
+                <string>Destination</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_Src">
+               <property name="text">
+                <string>Source</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QPushButton" name="pushButton_SetDesDir">
+               <property name="text">
+                <string>Set</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="lineEdit_SrcDir"/>
+             </item>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="pushButton_SetSrcDir">
+               <property name="text">
+                <string>Set</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="lineEdit_DesDir"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupBox_ParseFileFormat">
+            <property name="title">
+             <string>Parse File Format</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_5">
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="checkBox_ParseZIP">
+               <property name="tabletTracking">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>ZIP</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="checkBox_ParseCSV">
+               <property name="tabletTracking">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>CSV</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QCheckBox" name="checkBox_ParseFeather">
+               <property name="text">
+                <string>Feather</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,1,1">
+          <item>
+           <widget class="QGroupBox" name="groupBox_ParseFileTpye">
+            <property name="title">
+             <string>Parse File Type</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_ParseFileType">
+             <item row="0" column="2">
+              <widget class="QRadioButton" name="radioButton_AggTrade">
+               <property name="text">
+                <string>aggTrade</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QRadioButton" name="radioButton_Trade">
+               <property name="text">
+                <string>trade</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QRadioButton" name="radioButton_Kline">
+               <property name="text">
+                <string>kline</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QRadioButton" name="radioButton_None">
+               <property name="text">
+                <string>none</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupBox_SaveFileFormat">
+            <property name="title">
+             <string>Save File Format</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_SaveFileFormat">
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="checkBox_SaveFeather">
+               <property name="text">
+                <string>Feather</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="checkBox_SaveCSV">
+               <property name="text">
+                <string>CSV</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupBox_FileParserController">
+            <property name="title">
+             <string>Controller</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_FileParserController">
+             <item row="0" column="0">
+              <widget class="QPushButton" name="pushButton_ParseStart">
+               <property name="text">
+                <string>Start</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="pushButton_ParseStop">
+               <property name="text">
+                <string>Stop</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTextBrowser" name="textBrowser_FileParseNotice">
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="markdown">
+           <string>1. Unzip the zip files to the same direction and combine all csv and feather
+files to one single csv and feather file. 
+
+2. If the Parse File Tpye is checked, there will be an optimation after the
+unzip progress, such as column name, datetime index, symbol name, etc.    
+
+</string>
+          </property>
+          <property name="html">
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;1. Unzip the zip files to the same direction and combine all csv and feather files to one single csv and feather file. &lt;/p&gt;
+&lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2. If the Parse File Tpye is checked, there will be an optimation after the unzip progress, such as column name, datetime index, symbol name, etc.    &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_DataView">
+       <attribute name="title">
+        <string>Data View</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="QPushButton" name="pushButton_DataView_Open">
+            <property name="text">
+             <string>Open</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="pushButton_DataView_Info">
+            <property name="text">
+             <string>Info</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="pushButton_DataView_Null">
+            <property name="text">
+             <string>Null</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QPushButton" name="pushButton_DataView_Describe">
+            <property name="text">
+             <string>Describe</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QPushButton" name="pushButton_DataView_Scatter">
+            <property name="text">
+             <string>Scatter</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="5">
+           <widget class="QPushButton" name="pushButton_DataView_KDE">
+            <property name="text">
+             <string>KDE</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="6">
+           <widget class="QPushButton" name="pushButton_DataView_PairPlot">
+            <property name="text">
+             <string>PairPlot</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="7">
+           <widget class="QPushButton" name="pushButton_DataView_CorrMap">
+            <property name="text">
+             <string>CorrMap</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="8">
+           <widget class="QPushButton" name="pushButton_DataView_Feature">
+            <property name="text">
+             <string>Feature</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="9">
+           <widget class="QTableView" name="tableView_DataView"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_Config">
+       <attribute name="title">
+        <string>Config</string>
+       </attribute>
+       <widget class="QPushButton" name="pushButton_SaveConfig">
         <property name="geometry">
          <rect>
-          <x>130</x>
-          <y>70</y>
-          <width>481</width>
-          <height>80</height>
+          <x>480</x>
+          <y>270</y>
+          <width>75</width>
+          <height>24</height>
          </rect>
         </property>
-        <property name="title">
-         <string>CSV to Feature</string>
+        <property name="text">
+         <string>Save</string>
         </property>
        </widget>
-      </widget>
-      <widget class="QWidget" name="tab_About">
-       <attribute name="title">
-        <string>About</string>
-       </attribute>
+       <widget class="QLineEdit" name="lineEdit_LogPath">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>50</y>
+          <width>421</width>
+          <height>20</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>50</y>
+          <width>54</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Log Path</string>
+        </property>
+       </widget>
       </widget>
      </widget>
      <widget class="QTextEdit" name="textEdit_Log">

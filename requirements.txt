@@ -7,3 +7,4 @@ multiprocess
 Send2Trash
 pyinstaller
 tabulate
+pyarrow
