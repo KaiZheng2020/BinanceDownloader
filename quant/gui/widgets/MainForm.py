@@ -8,20 +8,16 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QDateEdit, QDateTimeEdit,
-    QGridLayout, QGroupBox, QHBoxLayout, QHeaderView,
-    QLabel, QLayout, QLineEdit, QPushButton,
-    QRadioButton, QSizePolicy, QSplitter, QTabWidget,
-    QTableView, QTextBrowser, QTextEdit, QTimeEdit,
-    QVBoxLayout, QWidget)
-import resources_rc
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale, QMetaObject, QObject, QPoint, QRect, QSize, Qt, QTime,
+                            QUrl)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QGradient, QIcon, QImage,
+                           QKeySequence, QLinearGradient, QPainter, QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDateEdit, QDateTimeEdit, QGridLayout, QGroupBox,
+                               QHBoxLayout, QHeaderView, QLabel, QLayout, QLineEdit, QPushButton, QSizePolicy, QSplitter,
+                               QTableView, QTabWidget, QTextBrowser, QTextEdit, QTimeEdit, QVBoxLayout, QWidget)
+
+from ..resources import resources
+
 
 class Ui_MainForm(object):
     def setupUi(self, MainForm):
@@ -79,7 +75,6 @@ class Ui_MainForm(object):
 
         self.horizontalLayout_7.addWidget(self.checkBox_cm)
 
-
         self.horizontalLayout_up.addWidget(self.groupBox_TradingType)
 
         self.groupBox_DataType = QGroupBox(self.tab_HistoryData)
@@ -102,7 +97,6 @@ class Ui_MainForm(object):
 
         self.horizontalLayout_4.addWidget(self.checkBox_Trade)
 
-
         self.horizontalLayout_up.addWidget(self.groupBox_DataType)
 
         self.groupBox_Interval = QGroupBox(self.tab_HistoryData)
@@ -124,7 +118,6 @@ class Ui_MainForm(object):
         self.checkBox_1d.setChecked(True)
 
         self.horizontalLayout_5.addWidget(self.checkBox_1d)
-
 
         self.horizontalLayout_up.addWidget(self.groupBox_Interval)
 
@@ -192,7 +185,6 @@ class Ui_MainForm(object):
 
         self.horizontalLayout_3.addWidget(self.lineEdit_Proxy)
 
-
         self.horizontalLayout_mid.addWidget(self.groupBox_Proxy)
 
         self.horizontalLayout_mid.setStretch(0, 2)
@@ -249,7 +241,6 @@ class Ui_MainForm(object):
 
         self.gridLayout.addWidget(self.pushButton_DownloaderStop, 2, 3, 1, 1)
 
-
         self.horizontalLayout_down.addWidget(self.groupBox_Controller)
 
         self.groupBox_Timer = QGroupBox(self.tab_HistoryData)
@@ -271,14 +262,12 @@ class Ui_MainForm(object):
 
         self.gridLayout_Timer.addWidget(self.pushButton_TimerStart, 0, 1, 1, 1)
 
-
         self.horizontalLayout_down.addWidget(self.groupBox_Timer)
 
         self.horizontalLayout_down.setStretch(0, 2)
         self.horizontalLayout_down.setStretch(1, 1)
 
         self.verticalLayout_main.addLayout(self.horizontalLayout_down)
-
 
         self.verticalLayout_3.addLayout(self.verticalLayout_main)
 
@@ -364,7 +353,6 @@ class Ui_MainForm(object):
 
         self.gridLayout_4.addWidget(self.lineEdit_DesDir, 1, 1, 1, 1)
 
-
         self.horizontalLayout_FileParserUp.addWidget(self.groupBox_Path)
 
         self.groupBox_ParseFileFormat = QGroupBox(self.tab_Parser)
@@ -390,41 +378,23 @@ class Ui_MainForm(object):
 
         self.gridLayout_5.addWidget(self.checkBox_ParseFeather, 0, 2, 1, 1)
 
-
         self.horizontalLayout_FileParserUp.addWidget(self.groupBox_ParseFileFormat)
-
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_FileParserUp)
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.groupBox_ParseFileTpye = QGroupBox(self.tab_Parser)
-        self.groupBox_ParseFileTpye.setObjectName(u"groupBox_ParseFileTpye")
-        self.gridLayout_ParseFileType = QGridLayout(self.groupBox_ParseFileTpye)
-        self.gridLayout_ParseFileType.setObjectName(u"gridLayout_ParseFileType")
-        self.radioButton_AggTrade = QRadioButton(self.groupBox_ParseFileTpye)
-        self.radioButton_AggTrade.setObjectName(u"radioButton_AggTrade")
+        self.groupBox_ParseFileType = QGroupBox(self.tab_Parser)
+        self.groupBox_ParseFileType.setObjectName(u"groupBox_ParseFileType")
+        self.checkBox_ParseFileType_Auto = QCheckBox(self.groupBox_ParseFileType)
+        self.checkBox_ParseFileType_Auto.setObjectName(u"checkBox_ParseFileType_Auto")
+        self.checkBox_ParseFileType_Auto.setGeometry(QRect(30, 40, 114, 20))
+        self.checkBox_ParseFileType_Auto.setChecked(True)
+        self.label_2 = QLabel(self.groupBox_ParseFileType)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(20, 70, 139, 16))
 
-        self.gridLayout_ParseFileType.addWidget(self.radioButton_AggTrade, 0, 2, 1, 1)
-
-        self.radioButton_Trade = QRadioButton(self.groupBox_ParseFileTpye)
-        self.radioButton_Trade.setObjectName(u"radioButton_Trade")
-
-        self.gridLayout_ParseFileType.addWidget(self.radioButton_Trade, 0, 3, 1, 1)
-
-        self.radioButton_Kline = QRadioButton(self.groupBox_ParseFileTpye)
-        self.radioButton_Kline.setObjectName(u"radioButton_Kline")
-
-        self.gridLayout_ParseFileType.addWidget(self.radioButton_Kline, 0, 1, 1, 1)
-
-        self.radioButton_None = QRadioButton(self.groupBox_ParseFileTpye)
-        self.radioButton_None.setObjectName(u"radioButton_None")
-        self.radioButton_None.setChecked(True)
-
-        self.gridLayout_ParseFileType.addWidget(self.radioButton_None, 0, 0, 1, 1)
-
-
-        self.horizontalLayout.addWidget(self.groupBox_ParseFileTpye)
+        self.horizontalLayout.addWidget(self.groupBox_ParseFileType)
 
         self.groupBox_SaveFileFormat = QGroupBox(self.tab_Parser)
         self.groupBox_SaveFileFormat.setObjectName(u"groupBox_SaveFileFormat")
@@ -440,7 +410,6 @@ class Ui_MainForm(object):
         self.checkBox_SaveCSV.setChecked(True)
 
         self.gridLayout_SaveFileFormat.addWidget(self.checkBox_SaveCSV, 0, 0, 1, 1)
-
 
         self.horizontalLayout.addWidget(self.groupBox_SaveFileFormat)
 
@@ -458,12 +427,26 @@ class Ui_MainForm(object):
 
         self.gridLayout_FileParserController.addWidget(self.pushButton_ParseStop, 0, 1, 1, 1)
 
-
         self.horizontalLayout.addWidget(self.groupBox_FileParserController)
 
-        self.horizontalLayout.setStretch(0, 2)
-        self.horizontalLayout.setStretch(1, 1)
-        self.horizontalLayout.setStretch(2, 1)
+        self.groupBox_FileSplit = QGroupBox(self.tab_Parser)
+        self.groupBox_FileSplit.setObjectName(u"groupBox_FileSplit")
+        self.gridLayout_3 = QGridLayout(self.groupBox_FileSplit)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.comboBox_FileSplit = QComboBox(self.groupBox_FileSplit)
+        self.comboBox_FileSplit.addItem("")
+        self.comboBox_FileSplit.addItem("")
+        self.comboBox_FileSplit.addItem("")
+        self.comboBox_FileSplit.setObjectName(u"comboBox_FileSplit")
+
+        self.gridLayout_3.addWidget(self.comboBox_FileSplit, 0, 0, 1, 1)
+
+        self.pushButton_FileSplit = QPushButton(self.groupBox_FileSplit)
+        self.pushButton_FileSplit.setObjectName(u"pushButton_FileSplit")
+
+        self.gridLayout_3.addWidget(self.pushButton_FileSplit, 0, 1, 1, 1)
+
+        self.horizontalLayout.addWidget(self.groupBox_FileSplit)
 
         self.verticalLayout_2.addLayout(self.horizontalLayout)
 
@@ -530,9 +513,13 @@ class Ui_MainForm(object):
 
         self.tableView_DataView = QTableView(self.tab_DataView)
         self.tableView_DataView.setObjectName(u"tableView_DataView")
+        self.tableView_DataView.setDragEnabled(True)
+        self.tableView_DataView.setSortingEnabled(True)
+        self.tableView_DataView.horizontalHeader().setCascadingSectionResizes(False)
+        self.tableView_DataView.horizontalHeader().setStretchLastSection(False)
+        self.tableView_DataView.verticalHeader().setStretchLastSection(False)
 
         self.gridLayout_2.addWidget(self.tableView_DataView, 1, 0, 1, 9)
-
 
         self.verticalLayout_4.addLayout(self.gridLayout_2)
 
@@ -560,13 +547,12 @@ class Ui_MainForm(object):
 
         self.verticalLayout.addWidget(self.splitter)
 
-
         self.retranslateUi(MainForm)
 
-        self.tabWidget.setCurrentIndex(4)
-
+        self.tabWidget.setCurrentIndex(3)
 
         QMetaObject.connectSlotsByName(MainForm)
+
     # setupUi
 
     def retranslateUi(self, MainForm):
@@ -588,15 +574,15 @@ class Ui_MainForm(object):
         self.label_EndDate.setText(QCoreApplication.translate("MainForm", u"End Date", None))
         self.groupBox_Proxy.setTitle(QCoreApplication.translate("MainForm", u"Proxy", None))
         self.checkBox_Proxy.setText(QCoreApplication.translate("MainForm", u"Addr", None))
-#if QT_CONFIG(tooltip)
+        #if QT_CONFIG(tooltip)
         self.lineEdit_Proxy.setToolTip("")
-#endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(statustip)
+        #endif // QT_CONFIG(tooltip)
+        #if QT_CONFIG(statustip)
         self.lineEdit_Proxy.setStatusTip("")
-#endif // QT_CONFIG(statustip)
-#if QT_CONFIG(whatsthis)
+        #endif // QT_CONFIG(statustip)
+        #if QT_CONFIG(whatsthis)
         self.lineEdit_Proxy.setWhatsThis("")
-#endif // QT_CONFIG(whatsthis)
+        #endif // QT_CONFIG(whatsthis)
         self.lineEdit_Proxy.setInputMask("")
         self.lineEdit_Proxy.setPlaceholderText("")
         self.groupBox_Controller.setTitle(QCoreApplication.translate("MainForm", u"Controller", None))
@@ -611,15 +597,18 @@ class Ui_MainForm(object):
         self.groupBox_Timer.setTitle(QCoreApplication.translate("MainForm", u"Timer (Auto Download Last Day's Data)", None))
         self.pushButton_TimerStop.setText(QCoreApplication.translate("MainForm", u"Stop", None))
         self.pushButton_TimerStart.setText(QCoreApplication.translate("MainForm", u"Start", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_HistoryData), QCoreApplication.translate("MainForm", u"Trading History Data", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_HistoryData),
+                                  QCoreApplication.translate("MainForm", u"Trading History Data", None))
         self.groupBoxFutures.setTitle(QCoreApplication.translate("MainForm", u"Futures Order Book Level 2", None))
         self.pushButtonFuturesOrderBookSpiderStart.setText(QCoreApplication.translate("MainForm", u"Start", None))
         self.labelEndTime.setText(QCoreApplication.translate("MainForm", u"To", None))
         self.labelBeginTime.setText(QCoreApplication.translate("MainForm", u"From", None))
         self.labelSecretKey.setText(QCoreApplication.translate("MainForm", u"Secret Key", None))
         self.labelAPIKey.setText(QCoreApplication.translate("MainForm", u"API Key", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_FuturesOrderBookLevel2), QCoreApplication.translate("MainForm", u"Futures Order Book Leve 2", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_Realtime), QCoreApplication.translate("MainForm", u"Real-Time Data", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_FuturesOrderBookLevel2),
+                                  QCoreApplication.translate("MainForm", u"Futures Order Book Leve 2", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_Realtime),
+                                  QCoreApplication.translate("MainForm", u"Real-Time Data", None))
         self.groupBox_Path.setTitle(QCoreApplication.translate("MainForm", u"Path", None))
         self.label_Des.setText(QCoreApplication.translate("MainForm", u"Destination", None))
         self.label_Src.setText(QCoreApplication.translate("MainForm", u"Source", None))
@@ -629,32 +618,44 @@ class Ui_MainForm(object):
         self.checkBox_ParseZIP.setText(QCoreApplication.translate("MainForm", u"ZIP", None))
         self.checkBox_ParseCSV.setText(QCoreApplication.translate("MainForm", u"CSV", None))
         self.checkBox_ParseFeather.setText(QCoreApplication.translate("MainForm", u"Feather", None))
-        self.groupBox_ParseFileTpye.setTitle(QCoreApplication.translate("MainForm", u"Parse File Type", None))
-        self.radioButton_AggTrade.setText(QCoreApplication.translate("MainForm", u"aggTrade", None))
-        self.radioButton_Trade.setText(QCoreApplication.translate("MainForm", u"trade", None))
-        self.radioButton_Kline.setText(QCoreApplication.translate("MainForm", u"kline", None))
-        self.radioButton_None.setText(QCoreApplication.translate("MainForm", u"none", None))
+        self.groupBox_ParseFileType.setTitle(QCoreApplication.translate("MainForm", u"Parse File Tpye", None))
+        self.checkBox_ParseFileType_Auto.setText(QCoreApplication.translate("MainForm", u"Auto Recognize", None))
+        self.label_2.setText(QCoreApplication.translate("MainForm", u"  (aggTrade, kline, trade)", None))
         self.groupBox_SaveFileFormat.setTitle(QCoreApplication.translate("MainForm", u"Save File Format", None))
         self.checkBox_SaveFeather.setText(QCoreApplication.translate("MainForm", u"Feather", None))
         self.checkBox_SaveCSV.setText(QCoreApplication.translate("MainForm", u"CSV", None))
         self.groupBox_FileParserController.setTitle(QCoreApplication.translate("MainForm", u"Controller", None))
         self.pushButton_ParseStart.setText(QCoreApplication.translate("MainForm", u"Start", None))
         self.pushButton_ParseStop.setText(QCoreApplication.translate("MainForm", u"Stop", None))
-        self.textBrowser_FileParseNotice.setMarkdown(QCoreApplication.translate("MainForm", u"1. Unzip the zip files to the same direction and combine all csv and feather\n"
-"files to one single csv and feather file. \n"
-"\n"
-"2. If the Parse File Tpye is checked, there will be an optimation after the\n"
-"unzip progress, such as column name, datetime index, symbol name, etc.    \n"
-"\n"
-"", None))
-        self.textBrowser_FileParseNotice.setHtml(QCoreApplication.translate("MainForm", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"</style></head><body style=\" font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1. Unzip the zip files to the same direction and combine all csv and feather files to one single csv and feather file. </p>\n"
-"<p style=\" margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">2. If the Parse File Tpye is checked, there will be an optimation after the unzip progress, such as column name, datetime index, symbol name, etc.    </p></body></html>", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_Parser), QCoreApplication.translate("MainForm", u"File Parser", None))
+        self.groupBox_FileSplit.setTitle(QCoreApplication.translate("MainForm", u"File Split", None))
+        self.comboBox_FileSplit.setItemText(0, QCoreApplication.translate("MainForm", u"By Day", None))
+        self.comboBox_FileSplit.setItemText(1, QCoreApplication.translate("MainForm", u"By Month", None))
+        self.comboBox_FileSplit.setItemText(2, QCoreApplication.translate("MainForm", u"By Year", None))
+
+        self.pushButton_FileSplit.setText(QCoreApplication.translate("MainForm", u"File Split", None))
+        self.textBrowser_FileParseNotice.setMarkdown(
+            QCoreApplication.translate(
+                "MainForm", u"1. Unzip the zip files to the same directory and combine all csv and feather\n"
+                "files of the same directory to one single csv and feather file. \n"
+                "\n"
+                "2. If the Parse File Tpye - Auto Recognize is checked, there will be an\n"
+                "optimation after the unzip progress, such as column name, datetime index, sort,\n"
+                "etc.    \n"
+                "\n"
+                "", None))
+        self.textBrowser_FileParseNotice.setHtml(
+            QCoreApplication.translate(
+                "MainForm",
+                u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+                "p, li { white-space: pre-wrap; }\n"
+                "hr { height: 1px; border-width: 0; }\n"
+                "</style></head><body style=\" font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+                "<p style=\" margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1. Unzip the zip files to the same directory and combine all csv and feather files of the same directory to one single csv and feather file. </p>\n"
+                "<p style=\" margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">2. If the Parse File Tpye - Auto Recognize is checked, there will be an optimation after the unzip progress, such as column name, datetime index, sort, etc.    </p></body></html>",
+                None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_Parser),
+                                  QCoreApplication.translate("MainForm", u"File Parser", None))
         self.pushButton_DataView_Open.setText(QCoreApplication.translate("MainForm", u"Open", None))
         self.pushButton_DataView_Info.setText(QCoreApplication.translate("MainForm", u"Info", None))
         self.pushButton_DataView_Null.setText(QCoreApplication.translate("MainForm", u"Null", None))
@@ -664,12 +665,15 @@ class Ui_MainForm(object):
         self.pushButton_DataView_PairPlot.setText(QCoreApplication.translate("MainForm", u"PairPlot", None))
         self.pushButton_DataView_CorrMap.setText(QCoreApplication.translate("MainForm", u"CorrMap", None))
         self.pushButton_DataView_Feature.setText(QCoreApplication.translate("MainForm", u"Feature", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_DataView), QCoreApplication.translate("MainForm", u"Data View", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_DataView),
+                                  QCoreApplication.translate("MainForm", u"Data View", None))
         self.pushButton_SaveConfig.setText(QCoreApplication.translate("MainForm", u"Save", None))
         self.label.setText(QCoreApplication.translate("MainForm", u"Log Path", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_Config), QCoreApplication.translate("MainForm", u"Config", None))
-#if QT_CONFIG(tooltip)
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_Config),
+                                  QCoreApplication.translate("MainForm", u"Config", None))
+        #if QT_CONFIG(tooltip)
         self.textEdit_Log.setToolTip("")
-#endif // QT_CONFIG(tooltip)
-    # retranslateUi
 
+
+#endif // QT_CONFIG(tooltip)
+# retranslateUi

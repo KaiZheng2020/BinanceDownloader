@@ -14,7 +14,7 @@ from tqdm import tqdm
 
 
 class FileParseConfig():
-    def __init__(self, src_path, des_path, parse_zip_flag, parse_csv_flag, parse_feather_flag, parse_file_type,
+    def __init__(self, src_path, des_path, parse_zip_flag, parse_csv_flag, parse_feather_flag, auto_parse_file_type_flag,
                  save_file_csv_flag, save_file_feather_flag):
 
         self.src_path = src_path
@@ -22,7 +22,7 @@ class FileParseConfig():
         self.parse_zip_flag = parse_zip_flag
         self.parse_csv_flag = parse_csv_flag
         self.parse_feather_flag = parse_feather_flag
-        self.parse_file_type = parse_file_type
+        self.auto_parse_file_type_flag = auto_parse_file_type_flag
         self.save_file_csv_flag = save_file_csv_flag
         self.save_file_feather_flag = save_file_feather_flag
 
@@ -30,7 +30,7 @@ class FileParseConfig():
 
         table = [['Src Path', self.src_path], ['Des Path', self.des_path], ['Parse Zip File', self.parse_zip_flag],
                  ['Parse CSV File', self.parse_csv_flag], ['Parse Feather File', self.parse_feather_flag],
-                 ['Parse File Type', self.parse_file_type], ['Save CSV File', self.save_file_csv_flag],
+                 ['Auto Parse File Type', self.auto_parse_file_type_flag], ['Save CSV File', self.save_file_csv_flag],
                  ['Save Feather File', self.save_file_feather_flag]]
 
         return tabulate(table, tablefmt='grid')
@@ -66,33 +66,26 @@ class FileParseWorker(Thread):
             if len(content_list) > 0:
 
                 content_df = pd.concat(content_list)
+                save_path = os.path.join(self.config.des_path, root[len(self.config.src_path) + 1:])
+                if self.config.auto_parse_file_type_flag:
+                    if 'kline' in root:
+                        content_df.columns = [
+                            'datetime', 'open', 'high', 'low', 'close', 'volume', 'closetime', 'quote_asset_volume',
+                            'number_of_trades', 'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore'
+                        ]
 
-                if self.config.parse_file_type == 'kline':
-                    content_df.columns = [
-                        'datetime', 'open', 'high', 'low', 'close', 'volume', 'closetime', 'quote_asset_volume',
-                        'number_of_trades', 'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore'
-                    ]
+                        content_df['closetime'] = pd.to_datetime(content_df['datetime'], unit='ms')
 
-                    content_df['closetime'] = pd.to_datetime(content_df['datetime'])
-                    save_path = os.path.join(self.config.des_path, self.config.parse_file_type,
-                                             root[len(self.config.src_path) + 1:])
+                    elif 'aggTrade' in root:
+                        content_df.columns = [
+                            'trade_id', 'price', 'quantity', 'first_trade_id', 'last_trade_id', 'datetime',
+                            'was_the_buyer_the_maker'
+                        ]
 
-                elif self.config.parse_file_type == 'aggTrade':
-                    content_df.columns = [
-                        'trade_id', 'price', 'quantity', 'first_trade_id', 'last_trade_id', 'datetime',
-                        'was_the_buyer_the_maker'
-                    ]
-                    save_path = os.path.join(self.config.des_path, self.config.parse_file_type,
-                                             root[len(self.config.src_path) + 1:])
+                    elif 'trade' in root:
+                        content_df.columns = ['trade_id', 'price', 'qty', 'quote_qty', 'datetime', 'is_buyer_maker']
 
-                elif self.config.parse_file_type == 'trade':
-                    content_df.columns = ['trade_id', 'price', 'qty', 'quote_qty', 'datetime', 'is_buyer_maker']
-                    save_path = os.path.join(self.config.des_path, self.config.parse_file_type,
-                                             root[len(self.config.src_path) + 1:])
-                else:
-                    save_path = os.path.join(self.config.des_path, root[len(self.config.src_path) + 1:])
-
-                content_df['datetime'] = pd.to_datetime(content_df['datetime'])
+                content_df['datetime'] = pd.to_datetime(content_df['datetime'], unit='ms')
                 content_df.set_index('datetime', inplace=True)
                 content_df.sort_index(axis=0, inplace=True)
                 content_df.reset_index(inplace=True)
@@ -102,7 +95,7 @@ class FileParseWorker(Thread):
 
                 if self.config.save_file_csv_flag:
                     save_csv_path = os.path.join(save_path, 'results.csv')
-                    content_df.to_csv(save_csv_path)
+                    content_df.to_csv(save_csv_path, index=False)
                     print(save_csv_path)
                 if self.config.save_file_feather_flag:
                     save_feather_path = os.path.join(save_path, 'results.feather')

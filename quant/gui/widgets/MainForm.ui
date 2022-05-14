@@ -64,7 +64,7 @@
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tab_HistoryData">
        <attribute name="title">
@@ -666,45 +666,41 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,1,1">
+         <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0">
           <item>
-           <widget class="QGroupBox" name="groupBox_ParseFileTpye">
+           <widget class="QGroupBox" name="groupBox_ParseFileType">
             <property name="title">
-             <string>Parse File Type</string>
+             <string>Parse File Tpye</string>
             </property>
-            <layout class="QGridLayout" name="gridLayout_ParseFileType">
-             <item row="0" column="2">
-              <widget class="QRadioButton" name="radioButton_AggTrade">
-               <property name="text">
-                <string>aggTrade</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="3">
-              <widget class="QRadioButton" name="radioButton_Trade">
-               <property name="text">
-                <string>trade</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QRadioButton" name="radioButton_Kline">
-               <property name="text">
-                <string>kline</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QRadioButton" name="radioButton_None">
-               <property name="text">
-                <string>none</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
+            <widget class="QCheckBox" name="checkBox_ParseFileType_Auto">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>40</y>
+               <width>114</width>
+               <height>20</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Auto Recognize</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_2">
+             <property name="geometry">
+              <rect>
+               <x>20</x>
+               <y>70</y>
+               <width>139</width>
+               <height>16</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>  (aggTrade, kline, trade)</string>
+             </property>
+            </widget>
            </widget>
           </item>
           <item>
@@ -756,6 +752,41 @@
             </layout>
            </widget>
           </item>
+          <item>
+           <widget class="QGroupBox" name="groupBox_FileSplit">
+            <property name="title">
+             <string>File Split</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="0">
+              <widget class="QComboBox" name="comboBox_FileSplit">
+               <item>
+                <property name="text">
+                 <string>By Day</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>By Month</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>By Year</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="pushButton_FileSplit">
+               <property name="text">
+                <string>File Split</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -764,11 +795,12 @@
            <bool>false</bool>
           </property>
           <property name="markdown">
-           <string>1. Unzip the zip files to the same direction and combine all csv and feather
-files to one single csv and feather file. 
+           <string>1. Unzip the zip files to the same directory and combine all csv and feather
+files of the same directory to one single csv and feather file. 
 
-2. If the Parse File Tpye is checked, there will be an optimation after the
-unzip progress, such as column name, datetime index, symbol name, etc.    
+2. If the Parse File Tpye - Auto Recognize is checked, there will be an
+optimation after the unzip progress, such as column name, datetime index, sort,
+etc.    
 
 </string>
           </property>
@@ -778,8 +810,8 @@ unzip progress, such as column name, datetime index, symbol name, etc.
 p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;1. Unzip the zip files to the same direction and combine all csv and feather files to one single csv and feather file. &lt;/p&gt;
-&lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2. If the Parse File Tpye is checked, there will be an optimation after the unzip progress, such as column name, datetime index, symbol name, etc.    &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;1. Unzip the zip files to the same directory and combine all csv and feather files of the same directory to one single csv and feather file. &lt;/p&gt;
+&lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2. If the Parse File Tpye - Auto Recognize is checked, there will be an optimation after the unzip progress, such as column name, datetime index, sort, etc.    &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -856,7 +888,23 @@ hr { height: 1px; border-width: 0; }
            </widget>
           </item>
           <item row="1" column="0" colspan="9">
-           <widget class="QTableView" name="tableView_DataView"/>
+           <widget class="QTableView" name="tableView_DataView">
+            <property name="dragEnabled">
+             <bool>true</bool>
+            </property>
+            <property name="sortingEnabled">
+             <bool>true</bool>
+            </property>
+            <attribute name="horizontalHeaderCascadingSectionResizes">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="verticalHeaderStretchLastSection">
+             <bool>false</bool>
+            </attribute>
+           </widget>
           </item>
          </layout>
         </item>

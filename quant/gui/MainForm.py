@@ -1,6 +1,7 @@
 import ctypes
 import importlib
 import inspect
+import os
 import sys
 
 import pandas as pd
@@ -10,7 +11,9 @@ from PySide6.QtCore import QDate, QObject, Signal
 from PySide6.QtWidgets import QApplication, QFileDialog, QWidget
 from quant.core.file_parse_worker import FileParseConfig, FileParseWorker
 from quant.core.history_download_worker import (HistoryDownloadConfig, HistoryDownloadTimer, HistoryDownloadWorker)
+from quant.gui.DataFrameTableModel import DataFrameTableModel
 from quant.utils.thread_util import thread_async_raise
+from requests import head
 from sqlalchemy import column
 
 from .widgets.MainForm import Ui_MainForm
@@ -59,6 +62,18 @@ class MainForm(QWidget, Ui_MainForm):
         self.gui.pushButton_SetDesDir.clicked.connect(self.set_des_dir)
         self.gui.pushButton_ParseStart.clicked.connect(self.parse_start)
         self.gui.pushButton_ParseStop.clicked.connect(self.parse_stop)
+
+        self.gui.pushButton_DataView_Open.clicked.connect(self.data_view_open)
+        self.gui.pushButton_DataView_Info.clicked.connect(self.data_view_info)
+        self.gui.pushButton_DataView_Null.clicked.connect(self.data_view_null)
+        self.gui.pushButton_DataView_Describe.clicked.connect(self.data_view_desc)
+        self.gui.pushButton_DataView_Scatter.clicked.connect(self.data_view_scatter)
+        self.gui.pushButton_DataView_KDE.clicked.connect(self.data_view_kde)
+        self.gui.pushButton_DataView_PairPlot.clicked.connect(self.data_view_pairplot)
+        self.gui.pushButton_DataView_CorrMap.clicked.connect(self.data_view_corrmap)
+        self.gui.pushButton_DataView_Feature.clicked.connect(self.data_view_feature)
+
+        self.gui.pushButton_FileSplit.clicked.connect(self.file_split)
 
         # History Download Variables
         self.history_download_symbols = []
@@ -129,7 +144,7 @@ class MainForm(QWidget, Ui_MainForm):
 
     def load_symbols(self):
         logger.info('load symbols...')
-        symbols_file_path = QFileDialog.getOpenFileName(self, 'Please Choose Symbols File', '.', 'csv(*.csv *.*')
+        symbols_file_path = QFileDialog.getOpenFileName(self, 'Please Choose Symbols File', '.', 'csv(*.csv);; *(*.*)')
         if symbols_file_path[0] != '':
             symbols_df = pd.read_csv(symbols_file_path[0], index_col=None, header=None, names=['Symbol'], skip_blank_lines=True)
             logger.info(symbols_df)
@@ -222,15 +237,6 @@ class MainForm(QWidget, Ui_MainForm):
         self.src_path = QFileDialog.getExistingDirectory(self, 'Please Choose Src Path', ".")
         self.gui.lineEdit_SrcDir.setText(self.src_path)
 
-        if self.gui.radioButton_Kline.text() in self.src_path:
-            self.gui.radioButton_Kline.setChecked(True)
-        elif self.gui.radioButton_AggTrade.text() in self.src_path:
-            self.gui.radioButton_AggTrade.setChecked(True)
-        elif self.gui.radioButton_Trade.text() in self.src_path:
-            self.gui.radioButton_Trade.setChecked(True)
-        else:
-            self.gui.radioButton_None.setChecked(True)
-
         logger.info(f'set src path: {self.src_path}')
 
     def set_des_dir(self):
@@ -252,21 +258,13 @@ class MainForm(QWidget, Ui_MainForm):
         parse_zip_flag = self.gui.checkBox_ParseZIP.isChecked()
         parse_csv_flag = self.gui.checkBox_ParseCSV.isChecked()
         parse_feather_flag = self.gui.checkBox_ParseFeather.isChecked()
-
-        if self.gui.radioButton_Kline.isChecked():
-            parse_file_type = 'kline'
-        elif self.gui.radioButton_AggTrade.isChecked():
-            parse_file_type = 'aggTrade'
-        elif self.gui.radioButton_Trade.isChecked():
-            parse_file_type = 'trade'
-        else:
-            parse_file_type = 'none'
+        auto_parse_file_type_flag = self.gui.checkBox_ParseFileType_Auto.isChecked()
 
         save_file_csv_flag = self.gui.checkBox_SaveCSV.isChecked()
         save_file_feather_flag = self.gui.checkBox_SaveFeather.isChecked()
 
-        return FileParseConfig(src_path, des_path, parse_zip_flag, parse_csv_flag, parse_feather_flag, parse_file_type,
-                               save_file_csv_flag, save_file_feather_flag)
+        return FileParseConfig(src_path, des_path, parse_zip_flag, parse_csv_flag, parse_feather_flag,
+                               auto_parse_file_type_flag, save_file_csv_flag, save_file_feather_flag)
 
     def parse_start(self):
         config = self.generate_file_parse_config()
@@ -276,3 +274,110 @@ class MainForm(QWidget, Ui_MainForm):
     def parse_stop(self):
         logger.info('stop worker thread...')
         thread_async_raise(self.file_parse_thread.ident, SystemExit)
+
+    def file_split(self):
+        file_path = QFileDialog.getOpenFileName(self, 'Please Open CSV or Feather File', '.',
+                                                'csv(*.csv);;feather(*.feather);;*(*.*)')
+
+        if len(file_path) == 0:
+            return
+
+        logger.info(f'file split: {file_path[0]}')
+
+        path = os.path.dirname(file_path[0])
+        file_split_type = self.gui.comboBox_FileSplit.currentText()
+
+        if '.feather' in file_path[0]:
+            data_df = pd.read_feather(file_path[0])
+            file_type = 'feather'
+        else:
+            data_df = pd.read_csv(file_path[0])
+            file_type = 'csv'
+
+        data_df["datetime"] = pd.to_datetime(data_df["datetime"])
+        data_df.set_index('datetime', inplace=True)
+
+        if file_split_type == 'By Year':
+            df_groupby = data_df.index.to_period("Y")
+        elif file_split_type == 'By Month':
+            df_groupby = data_df.index.to_period("M")
+        elif file_split_type == 'By Day':
+            df_groupby = data_df.index.to_period("D")
+
+        agg = data_df.groupby([df_groupby])
+        for group in agg:
+            file_path = os.path.join(path, f'{group[0]}.{file_type}')
+            group[1].reset_index(inplace=True)
+            group[1].to_feather(file_path)
+            logger.info(file_path)
+
+    # Data View
+
+    def data_view_open(self):
+        file_path = QFileDialog.getOpenFileName(self, 'Please Open CSV or Feather File', '.',
+                                                'csv(*.csv);;feather(*.feather);;*(*.*)')
+
+        if len(file_path) == 0:
+            return
+
+        logger.info(f'open file: {file_path[0]}')
+
+        if '.feather' in file_path[0]:
+            data_df = pd.read_feather(file_path[0])
+        else:
+            data_df = pd.read_csv(file_path[0])
+
+        self.gui.tableView_DataView.setModel(DataFrameTableModel(data_df))
+
+        logger.info(f'data shape: {data_df.shape}')
+
+    def data_view_info(self):
+        pass
+
+    def data_view_null(self):
+        pass
+
+    def data_view_desc(self):
+        pass
+
+    def data_view_scatter(self):
+        pass
+
+    def data_view_kde(self):
+        pass
+
+    def data_view_pairplot(self):
+        pass
+
+    def data_view_corrmap(self):
+        file_path = r'C:\Users\User\Desktop\BinanceDownloader\data\Source\Futures\um\klines\1d\BTCUSDT\BTCUSDT-1d-2022-01-01.csv'
+        content_df = pd.read_csv(file_path, header=None)
+
+        content_df.columns = [
+            'datetime', 'open', 'high', 'low', 'close', 'volume', 'closetime', 'quote_asset_volume', 'number_of_trades',
+            'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore'
+        ]
+
+        content_df['datetime'] = pd.to_datetime(content_df['datetime'], unit='ms')
+        content_df.set_index('datetime', inplace=True)
+        content_df.sort_index(axis=0, inplace=True)
+        content_df.reset_index(inplace=True)
+
+        print(content_df.head())
+
+    def data_view_feature(self):
+
+        file_path = r'C:\Users\User\Desktop\BinanceDownloader\data\Source\Futures\um\klines\1d\BTCUSDT\BTCUSDT-1d-2022-01-01.csv'
+        content_df = pd.read_csv(file_path, header=None)
+
+        content_df.columns = [
+            'datetime', 'open', 'high', 'low', 'close', 'volume', 'closetime', 'quote_asset_volume', 'number_of_trades',
+            'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore'
+        ]
+
+        content_df['datetime'] = pd.to_datetime(content_df['datetime'], unit='s')
+        content_df.set_index('datetime', inplace=True)
+        content_df.sort_index(axis=0, inplace=True)
+        content_df.reset_index(inplace=True)
+
+        print(content_df.head())
