@@ -22,8 +22,3 @@ If you want to build exe file or dmg file, please flow there steps.
 
 ## Coding
 
-Change widgets python file as follows, once the UI is changed:
-
-```python
-from ..resources import resources
-```

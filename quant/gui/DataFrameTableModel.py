@@ -1,15 +1,17 @@
 import pandas as pd
-from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt
+from PyQt5.QtCore import QAbstractTableModel, QModelIndex, Qt
 
 
 class DataFrameTableModel(QAbstractTableModel):
     def __init__(self, df=pd.DataFrame(), parent=None):
         QAbstractTableModel.__init__(self, parent=parent)
-        self._df = df
+        self._df = df.round(decimals=2)
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
             return self._df.columns[section]
+        if orientation == Qt.Vertical and role == Qt.DisplayRole:
+            return self._df.index[section]
         return None
 
     def data(self, index, role=Qt.DisplayRole):

@@ -1,4 +1,4 @@
-PySide6
+PyQt5
 tqdm
 loguru
 numpy

@@ -1,8 +1,8 @@
 import sys
 from multiprocessing import freeze_support
 
-from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QApplication
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QApplication
 
 from gui.MainForm import MainForm
 

@@ -75,10 +75,10 @@
     "python.linting.flake8Enabled": true,
     "python.formatting.provider": "yapf",
     "python.linting.enabled": false,
-    "qtForPython.designer.path": "pyside6-designer",
-    "qtForPython.uic.path": "pyside6-uic",
+    "qtForPython.designer.path": "designer",
+    "qtForPython.uic.path": "pyuic5.exe",
     "qtForPython.uic.args": ["-o \"${fileDirname}/${fileBasenameNoExtension}.py\""],
-    "qtForPython.rcc.path": "pyside6-rcc",
+    "qtForPython.rcc.path": "pyrcc5.exe",
     "qtForPython.rcc.args": ["-o \"${fileDirname}/${fileBasenameNoExtension}.py\""],
     "python.formatting.yapfArgs": ["--style={column_limit=128}"],
     "python.terminal.executeInFileDir": true

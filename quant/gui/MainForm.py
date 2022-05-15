@@ -5,17 +5,23 @@ import os
 import sys
 
 import pandas as pd
+import seaborn
 from loguru import logger
-from PySide6 import QtGui
-from PySide6.QtCore import QDate, QObject, Signal
-from PySide6.QtWidgets import QApplication, QFileDialog, QWidget
+from PyQt5 import QtGui
+from PyQt5.QtCore import QDate, QObject, QSize, Signal
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QApplication, QFileDialog, QWidget
 from quant.core.file_parse_worker import FileParseConfig, FileParseWorker
 from quant.core.history_download_worker import (HistoryDownloadConfig, HistoryDownloadTimer, HistoryDownloadWorker)
 from quant.gui.DataFrameTableModel import DataFrameTableModel
+from quant.gui.GraphForm import GraphForm
+from quant.gui.TableForm import TableForm
 from quant.utils.thread_util import thread_async_raise
 from requests import head
 from sqlalchemy import column
 
+from .InfoForm import InfoForm
+from .resources import resources
 from .widgets.MainForm import Ui_MainForm
 
 
@@ -35,6 +41,10 @@ class MainForm(QWidget, Ui_MainForm):
 
         self.gui = Ui_MainForm()
         self.gui.setupUi(self)
+
+        icon = QIcon()
+        icon.addFile(u":/logo/logo.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.setWindowIcon(icon)
 
         # Log
         self.stream = Stream()
@@ -81,10 +91,19 @@ class MainForm(QWidget, Ui_MainForm):
         self.history_download_thread = None
         self.history_download_timer = None
 
+        self.gui.dateEdit_EndDate.setDate(QDate.currentDate())
+
         # File Parse Variables
         self.file_parse_thread = None
 
-        self.gui.dateEdit_EndDate.setDate(QDate.currentDate())
+        # Data View
+        self.data_view_df = None
+
+        # Form
+
+        self.info_form = InfoForm()
+        self.table_form = TableForm()
+        self.kde_form = GraphForm()
 
         logger.info('Welcome to use Binance Downloader.')
 
@@ -307,8 +326,13 @@ class MainForm(QWidget, Ui_MainForm):
         agg = data_df.groupby([df_groupby])
         for group in agg:
             file_path = os.path.join(path, f'{group[0]}.{file_type}')
-            group[1].reset_index(inplace=True)
-            group[1].to_feather(file_path)
+
+            if file_type == 'feather':
+                group[1].reset_index(inplace=True)
+                group[1].to_feather(file_path)
+            else:
+                group[1].to_csv(file_path)
+
             logger.info(file_path)
 
     # Data View
@@ -323,28 +347,54 @@ class MainForm(QWidget, Ui_MainForm):
         logger.info(f'open file: {file_path[0]}')
 
         if '.feather' in file_path[0]:
-            data_df = pd.read_feather(file_path[0])
+            self.data_view_df = pd.read_feather(file_path[0])
         else:
-            data_df = pd.read_csv(file_path[0])
+            self.data_view_df = pd.read_csv(file_path[0])
 
-        self.gui.tableView_DataView.setModel(DataFrameTableModel(data_df))
+        self.gui.tableView_DataView.setModel(DataFrameTableModel(self.data_view_df))
 
-        logger.info(f'data shape: {data_df.shape}')
+        logger.info(f'data shape: {self.data_view_df.shape}')
 
     def data_view_info(self):
-        pass
+        self.data_view_df.info()
 
     def data_view_null(self):
-        pass
+        if self.data_view_df is not None:
+            info = self.data_view_df.isnull().sum()
+            self.table_form.setWindowTitle('Data Sum (is null)')
+            self.table_form.gui.tableView.setModel(DataFrameTableModel(info.to_frame(name='Sum')))
+            self.table_form.resize(300, 460)
+            if (self.table_form.isVisible()):
+                self.table_form.activateWindow()
+            else:
+                self.table_form.show()
+        else:
+            logger.info('please open and load CSV or Feather file at first.')
 
     def data_view_desc(self):
-        pass
+        if self.data_view_df is not None:
+            info = self.data_view_df.describe()
+            self.table_form.setWindowTitle('Data Describle')
+            self.table_form.gui.tableView.setModel(DataFrameTableModel(info))
+            self.table_form.resize(1240, 320)
+            if (self.table_form.isVisible()):
+                self.table_form.activateWindow()
+            else:
+                self.table_form.show()
+        else:
+            logger.info('please open and load CSV or Feather file at first.')
 
     def data_view_scatter(self):
         pass
 
     def data_view_kde(self):
-        pass
+        if self.data_view_df is not None:
+            if (self.kde_form.isVisible()):
+                self.kde_form.activateWindow()
+            else:
+                self.kde_form.show()
+        else:
+            logger.info('please open and load CSV or Feather file at first.')
 
     def data_view_pairplot(self):
         pass
@@ -366,18 +416,12 @@ class MainForm(QWidget, Ui_MainForm):
         print(content_df.head())
 
     def data_view_feature(self):
-
-        file_path = r'C:\Users\User\Desktop\BinanceDownloader\data\Source\Futures\um\klines\1d\BTCUSDT\BTCUSDT-1d-2022-01-01.csv'
-        content_df = pd.read_csv(file_path, header=None)
-
-        content_df.columns = [
-            'datetime', 'open', 'high', 'low', 'close', 'volume', 'closetime', 'quote_asset_volume', 'number_of_trades',
-            'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore'
-        ]
-
-        content_df['datetime'] = pd.to_datetime(content_df['datetime'], unit='s')
-        content_df.set_index('datetime', inplace=True)
-        content_df.sort_index(axis=0, inplace=True)
-        content_df.reset_index(inplace=True)
-
-        print(content_df.head())
+        if self.data_view_df is not None:
+            info = self.data_view_df.describe()
+            self.info_form.gui.textEdit.setPlainText(info)
+            if (self.info_form.isVisible()):
+                self.info_form.activateWindow()
+            else:
+                self.info_form.show()
+        else:
+            logger.info('please open and load CSV or Feather file at first.')
