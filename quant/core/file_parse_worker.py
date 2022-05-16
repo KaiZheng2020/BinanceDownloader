@@ -75,6 +75,7 @@ class FileParseWorker(Thread):
                         ]
 
                         content_df['closetime'] = pd.to_datetime(content_df['datetime'], unit='ms')
+                        content_df.drop('ignore', inplace=True)
 
                     elif 'aggTrade' in root:
                         content_df.columns = [

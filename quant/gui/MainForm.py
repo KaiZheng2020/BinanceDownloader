@@ -13,6 +13,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QFileDialog, QWidget
 from quant.core.file_parse_worker import FileParseConfig, FileParseWorker
 from quant.core.history_download_worker import (HistoryDownloadConfig, HistoryDownloadTimer, HistoryDownloadWorker)
+from quant.gui.CorrForm import CorrForm
 from quant.gui.DataFrameTableModel import DataFrameTableModel
 from quant.gui.GraphForm import GraphForm
 from quant.gui.TableForm import TableForm
@@ -21,6 +22,7 @@ from requests import head
 from sqlalchemy import column
 
 from .InfoForm import InfoForm
+from .PairForm import PairForm
 from .resources import resources
 from .widgets.MainForm import Ui_MainForm
 
@@ -45,6 +47,9 @@ class MainForm(QWidget, Ui_MainForm):
         icon = QIcon()
         icon.addFile(u":/logo/logo.png", QSize(), QIcon.Normal, QIcon.Off)
         self.setWindowIcon(icon)
+
+        self.gui.splitter.setStretchFactor(0, 3)
+        self.gui.splitter.setStretchFactor(1, 5)
 
         # Log
         self.stream = Stream()
@@ -103,7 +108,10 @@ class MainForm(QWidget, Ui_MainForm):
 
         self.info_form = InfoForm()
         self.table_form = TableForm()
-        self.kde_form = GraphForm()
+        self.graph_form = GraphForm()
+
+        self.pair_form = None
+        self.corr_form = CorrForm()
 
         logger.info('Welcome to use Binance Downloader.')
 
@@ -219,36 +227,48 @@ class MainForm(QWidget, Ui_MainForm):
         return config
 
     def history_download_thread_start(self):
-        logger.info('start worker thread...')
+        try:
+            logger.info('start worker thread...')
 
-        config = self.generate_history_download_config()
+            config = self.generate_history_download_config()
 
-        if config == None:
-            logger.error('history download config is None.')
+            if config == None:
+                logger.error('history download config is None.')
 
-        else:
-            logger.info(config)
+            else:
+                logger.info(config)
 
-            self.history_download_thread = HistoryDownloadWorker(config)
-            self.history_download_thread.start()
+                self.history_download_thread = HistoryDownloadWorker(config)
+                self.history_download_thread.start()
+        except Exception as err:
+            logger.error(err)
 
     def history_download_thread_stop(self):
-        logger.info('stop worker thread...')
-        thread_async_raise(self.history_download_thread.ident, SystemExit)
+        try:
+            logger.info('stop worker thread...')
+            thread_async_raise(self.history_download_thread.ident, SystemExit)
+        except Exception as err:
+            logger.error(err)
 
     def history_download_timer_start(self):
-        logger.info('start timer...')
+        try:
+            logger.info('start timer...')
 
-        config = self.generate_history_download_config()
-        print(config)
+            config = self.generate_history_download_config()
+            print(config)
 
-        self.history_download_timer = HistoryDownloadTimer(config)
-        self.history_download_timer.start()
+            self.history_download_timer = HistoryDownloadTimer(config)
+            self.history_download_timer.start()
+        except Exception as err:
+            logger.error(err)
 
     def history_download_timer_stop(self):
-        logger.info('stop timer...')
-        if self.history_download_timer is not None:
-            self.history_download_timer.stop()
+        try:
+            logger.info('stop timer...')
+            if self.history_download_timer is not None:
+                self.history_download_timer.stop()
+        except Exception as err:
+            logger.error(err)
 
     # File Parse Functions
 
@@ -286,13 +306,19 @@ class MainForm(QWidget, Ui_MainForm):
                                auto_parse_file_type_flag, save_file_csv_flag, save_file_feather_flag)
 
     def parse_start(self):
-        config = self.generate_file_parse_config()
-        self.file_parse_thread = FileParseWorker(config)
-        self.file_parse_thread.start()
+        try:
+            config = self.generate_file_parse_config()
+            self.file_parse_thread = FileParseWorker(config)
+            self.file_parse_thread.start()
+        except Exception as err:
+            logger.error(err)
 
     def parse_stop(self):
-        logger.info('stop worker thread...')
-        thread_async_raise(self.file_parse_thread.ident, SystemExit)
+        try:
+            logger.info('stop worker thread...')
+            thread_async_raise(self.file_parse_thread.ident, SystemExit)
+        except Exception as err:
+            logger.error(err)
 
     def file_split(self):
         file_path = QFileDialog.getOpenFileName(self, 'Please Open CSV or Feather File', '.',
@@ -338,90 +364,123 @@ class MainForm(QWidget, Ui_MainForm):
     # Data View
 
     def data_view_open(self):
-        file_path = QFileDialog.getOpenFileName(self, 'Please Open CSV or Feather File', '.',
-                                                'csv(*.csv);;feather(*.feather);;*(*.*)')
+        try:
+            file_path = QFileDialog.getOpenFileName(self, 'Please Open CSV or Feather File', '.',
+                                                    'csv(*.csv);;feather(*.feather);;*(*.*)')
 
-        if len(file_path) == 0:
-            return
+            if len(file_path) == 0:
+                return
 
-        logger.info(f'open file: {file_path[0]}')
+            logger.info(f'open file: {file_path[0]}')
 
-        if '.feather' in file_path[0]:
-            self.data_view_df = pd.read_feather(file_path[0])
-        else:
-            self.data_view_df = pd.read_csv(file_path[0])
+            if '.feather' in file_path[0]:
+                self.data_view_df = pd.read_feather(file_path[0])
+            else:
+                self.data_view_df = pd.read_csv(file_path[0])
 
-        self.gui.tableView_DataView.setModel(DataFrameTableModel(self.data_view_df))
+            self.gui.tableView_DataView.setModel(DataFrameTableModel(self.data_view_df))
 
-        logger.info(f'data shape: {self.data_view_df.shape}')
+            logger.info(f'data shape: {self.data_view_df.shape}')
+
+        except Exception as err:
+            logger.error(err)
 
     def data_view_info(self):
         self.data_view_df.info()
 
     def data_view_null(self):
-        if self.data_view_df is not None:
-            info = self.data_view_df.isnull().sum()
-            self.table_form.setWindowTitle('Data Sum (is null)')
-            self.table_form.gui.tableView.setModel(DataFrameTableModel(info.to_frame(name='Sum')))
-            self.table_form.resize(300, 460)
-            if (self.table_form.isVisible()):
-                self.table_form.activateWindow()
+        try:
+            if self.data_view_df is not None:
+                info = self.data_view_df.isnull().sum()
+                self.table_form.setWindowTitle('Data Sum (is null)')
+                self.table_form.gui.tableView.setModel(DataFrameTableModel(info.to_frame(name='Sum')))
+                self.table_form.resize(300, 460)
+                if (self.table_form.isVisible()):
+                    self.table_form.activateWindow()
+                else:
+                    self.table_form.show()
             else:
-                self.table_form.show()
-        else:
-            logger.info('please open and load CSV or Feather file at first.')
+                logger.info('please open and load CSV or Feather file at first.')
+        except Exception as err:
+            logger.error(err)
 
     def data_view_desc(self):
-        if self.data_view_df is not None:
-            info = self.data_view_df.describe()
-            self.table_form.setWindowTitle('Data Describle')
-            self.table_form.gui.tableView.setModel(DataFrameTableModel(info))
-            self.table_form.resize(1240, 320)
-            if (self.table_form.isVisible()):
-                self.table_form.activateWindow()
+        try:
+            if self.data_view_df is not None:
+                info = self.data_view_df.describe()
+                self.table_form.setWindowTitle('Data Describle')
+                self.table_form.gui.tableView.setModel(DataFrameTableModel(info))
+                self.table_form.resize(1320, 320)
+                if (self.table_form.isVisible()):
+                    self.table_form.activateWindow()
+                else:
+                    self.table_form.show()
             else:
-                self.table_form.show()
-        else:
-            logger.info('please open and load CSV or Feather file at first.')
+                logger.info('please open and load CSV or Feather file at first.')
+        except Exception as err:
+            logger.error(err)
 
     def data_view_scatter(self):
-        pass
+        try:
+            if self.data_view_df is not None:
+                self.graph_form.plot(self.data_view_df['close'])
+                if (self.graph_form.isVisible()):
+                    self.graph_form.activateWindow()
+                else:
+                    self.graph_form.show()
+            else:
+                logger.info('please open and load CSV or Feather file at first.')
+        except Exception as err:
+            logger.error(err)
 
     def data_view_kde(self):
-        if self.data_view_df is not None:
-            if (self.kde_form.isVisible()):
-                self.kde_form.activateWindow()
+        try:
+            if self.data_view_df is not None:
+                self.graph_form.plot_kde(self.data_view_df['close'])
+                if (self.graph_form.isVisible()):
+                    self.graph_form.activateWindow()
+                else:
+                    self.graph_form.show()
             else:
-                self.kde_form.show()
-        else:
-            logger.info('please open and load CSV or Feather file at first.')
+                logger.info('please open and load CSV or Feather file at first.')
+        except Exception as err:
+            logger.error(err)
 
     def data_view_pairplot(self):
-        pass
+        try:
+            if self.data_view_df is not None:
+                self.pair_form = PairForm(self.data_view_df)
+            else:
+                logger.info('please open and load CSV or Feather file at first.')
+        except Exception as err:
+            logger.error(err)
 
     def data_view_corrmap(self):
-        file_path = r'C:\Users\User\Desktop\BinanceDownloader\data\Source\Futures\um\klines\1d\BTCUSDT\BTCUSDT-1d-2022-01-01.csv'
-        content_df = pd.read_csv(file_path, header=None)
-
-        content_df.columns = [
-            'datetime', 'open', 'high', 'low', 'close', 'volume', 'closetime', 'quote_asset_volume', 'number_of_trades',
-            'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore'
-        ]
-
-        content_df['datetime'] = pd.to_datetime(content_df['datetime'], unit='ms')
-        content_df.set_index('datetime', inplace=True)
-        content_df.sort_index(axis=0, inplace=True)
-        content_df.reset_index(inplace=True)
-
-        print(content_df.head())
+        try:
+            if self.data_view_df is not None:
+                self.corr_form.plot(self.data_view_df)
+                if (self.corr_form.isVisible()):
+                    self.corr_form.activateWindow()
+                else:
+                    self.corr_form.show()
+            else:
+                logger.info('please open and load CSV or Feather file at first.')
+        except Exception as err:
+            logger.error(err)
 
     def data_view_feature(self):
-        if self.data_view_df is not None:
-            info = self.data_view_df.describe()
-            self.info_form.gui.textEdit.setPlainText(info)
-            if (self.info_form.isVisible()):
-                self.info_form.activateWindow()
+        try:
+            if self.data_view_df is not None:
+                spearman = self.data_view_df.corr('spearman')
+                results = spearman['close'].sort_values(ascending=False)
+                self.table_form.setWindowTitle('Correlation Sort')
+                self.table_form.gui.tableView.setModel(DataFrameTableModel(results.to_frame(name='Corr')))
+                self.table_form.resize(400, 600)
+                if (self.table_form.isVisible()):
+                    self.table_form.activateWindow()
+                else:
+                    self.table_form.show()
             else:
-                self.info_form.show()
-        else:
-            logger.info('please open and load CSV or Feather file at first.')
+                logger.info('please open and load CSV or Feather file at first.')
+        except Exception as err:
+            logger.error(err)

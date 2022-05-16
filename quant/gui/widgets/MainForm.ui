@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1200</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,50 +25,65 @@
   <property name="windowTitle">
    <string>Binance Downloader</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QGridLayout" name="gridLayout_MainForm">
    <property name="sizeConstraint">
     <enum>QLayout::SetMaximumSize</enum>
    </property>
-   <item>
+   <item row="0" column="0">
     <widget class="QSplitter" name="splitter">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>16777215</height>
-      </size>
-     </property>
      <property name="orientation">
       <enum>Qt::Vertical</enum>
-     </property>
-     <property name="handleWidth">
-      <number>5</number>
      </property>
      <widget class="QTabWidget" name="tabWidget">
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>320</height>
+        <height>200</height>
        </size>
       </property>
       <property name="tabShape">
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_HistoryData">
        <attribute name="title">
         <string>Trading History Data</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_main">
+         <layout class="QVBoxLayout" name="verticalLayout_main" stretch="1,1,1,1">
+          <property name="spacing">
+           <number>9</number>
+          </property>
+          <property name="sizeConstraint">
+           <enum>QLayout::SetDefaultConstraint</enum>
+          </property>
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
+           <number>4</number>
+          </property>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_up" stretch="1,1,1">
             <item>
@@ -405,6 +420,9 @@
             </item>
            </layout>
           </item>
+          <item>
+           <widget class="QTextBrowser" name="textBrowser_TradingHistoryDataNotice"/>
+          </item>
          </layout>
         </item>
        </layout>
@@ -413,154 +431,96 @@
        <attribute name="title">
         <string>Futures Order Book Leve 2</string>
        </attribute>
-       <widget class="QGroupBox" name="groupBoxFutures">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>50</y>
-          <width>601</width>
-          <height>91</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>Futures Order Book Level 2</string>
-        </property>
-        <widget class="QPushButton" name="pushButtonFuturesOrderBookSpiderStart">
-         <property name="geometry">
-          <rect>
-           <x>510</x>
-           <y>60</y>
-           <width>81</width>
-           <height>24</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Start</string>
-         </property>
-        </widget>
-        <widget class="QDateTimeEdit" name="dateTimeFuturesOrderBookEditEndDateTime">
-         <property name="geometry">
-          <rect>
-           <x>290</x>
-           <y>60</y>
-           <width>141</width>
-           <height>22</height>
-          </rect>
-         </property>
-         <property name="date">
-          <date>
-           <year>2022</year>
-           <month>1</month>
-           <day>1</day>
-          </date>
-         </property>
-         <property name="calendarPopup">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QLabel" name="labelEndTime">
-         <property name="geometry">
-          <rect>
-           <x>250</x>
-           <y>60</y>
-           <width>21</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>To</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="labelBeginTime">
-         <property name="geometry">
-          <rect>
-           <x>250</x>
-           <y>30</y>
-           <width>31</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>From</string>
-         </property>
-        </widget>
-        <widget class="QDateTimeEdit" name="dateTimeEditFuturesOrderBookBeginDateTime">
-         <property name="geometry">
-          <rect>
-           <x>290</x>
-           <y>30</y>
-           <width>141</width>
-           <height>22</height>
-          </rect>
-         </property>
-         <property name="dateTime">
-          <datetime>
-           <hour>0</hour>
-           <minute>0</minute>
-           <second>0</second>
-           <year>2021</year>
-           <month>1</month>
-           <day>1</day>
-          </datetime>
-         </property>
-         <property name="date">
-          <date>
-           <year>2021</year>
-           <month>1</month>
-           <day>1</day>
-          </date>
-         </property>
-         <property name="calendarPopup">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditSecretKey">
-         <property name="geometry">
-          <rect>
-           <x>80</x>
-           <y>60</y>
-           <width>161</width>
-           <height>21</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEditAPIKey">
-         <property name="geometry">
-          <rect>
-           <x>80</x>
-           <y>30</y>
-           <width>161</width>
-           <height>21</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="labelSecretKey">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>60</y>
-           <width>71</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Secret Key</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="labelAPIKey">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>30</y>
-           <width>51</width>
-           <height>16</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>API Key</string>
-         </property>
-        </widget>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QGroupBox" name="groupBoxFutures">
+          <property name="title">
+           <string>Futures Order Book Level 2</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLabel" name="labelAPIKey">
+             <property name="text">
+              <string>API Key</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelSecretKey">
+             <property name="text">
+              <string>Secret Key</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEditAPIKey"/>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEditSecretKey"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelBeginTime">
+             <property name="text">
+              <string>From</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelEndTime">
+             <property name="text">
+              <string>To</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QDateTimeEdit" name="dateTimeEditFuturesOrderBookBeginDateTime">
+             <property name="dateTime">
+              <datetime>
+               <hour>0</hour>
+               <minute>0</minute>
+               <second>0</second>
+               <year>2021</year>
+               <month>1</month>
+               <day>1</day>
+              </datetime>
+             </property>
+             <property name="date">
+              <date>
+               <year>2021</year>
+               <month>1</month>
+               <day>1</day>
+              </date>
+             </property>
+             <property name="calendarPopup">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QDateTimeEdit" name="dateTimeFuturesOrderBookEditEndDateTime">
+             <property name="date">
+              <date>
+               <year>2022</year>
+               <month>1</month>
+               <day>1</day>
+              </date>
+             </property>
+             <property name="calendarPopup">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButtonFuturesOrderBookSpiderStart">
+             <property name="text">
+              <string>Start</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_Realtime">
        <attribute name="title">
@@ -571,7 +531,19 @@
        <attribute name="title">
         <string>File Parser</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="3,3,3">
+       <layout class="QVBoxLayout" name="verticalLayout_FileParser" stretch="3,3,3">
+        <property name="leftMargin">
+         <number>4</number>
+        </property>
+        <property name="topMargin">
+         <number>4</number>
+        </property>
+        <property name="rightMargin">
+         <number>4</number>
+        </property>
+        <property name="bottomMargin">
+         <number>4</number>
+        </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_FileParserUp">
           <item>
@@ -662,7 +634,7 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0">
+         <layout class="QHBoxLayout" name="horizontalLayout_FileParser" stretch="0,0,0,0">
           <item>
            <widget class="QGroupBox" name="groupBox_ParseFileType">
             <property name="title">
@@ -672,8 +644,8 @@
              <property name="geometry">
               <rect>
                <x>30</x>
-               <y>40</y>
-               <width>114</width>
+               <y>60</y>
+               <width>191</width>
                <height>20</height>
               </rect>
              </property>
@@ -688,8 +660,8 @@
              <property name="geometry">
               <rect>
                <x>20</x>
-               <y>70</y>
-               <width>139</width>
+               <y>90</y>
+               <width>221</width>
                <height>16</height>
               </rect>
              </property>
@@ -790,7 +762,15 @@
           <property name="autoFillBackground">
            <bool>false</bool>
           </property>
-          <property name="markdown">
+          <property name="html">
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Microsoft YaHei UI';&quot;&gt;1. Unzip the zip files to the same directory and combine all csv and feather files of the same directory to one single csv and feather file. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Microsoft YaHei UI';&quot;&gt;2. If the Parse File Tpye - Auto Recognize is checked, there will be an optimation after the unzip progress, such as column name, datetime index, sort, etc.    &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="markdown" stdset="0">
            <string>1. Unzip the zip files to the same directory and combine all csv and feather
 files of the same directory to one single csv and feather file. 
 
@@ -799,15 +779,6 @@ optimation after the unzip progress, such as column name, datetime index, sort,
 etc.    
 
 </string>
-          </property>
-          <property name="html">
-           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;1. Unzip the zip files to the same directory and combine all csv and feather files of the same directory to one single csv and feather file. &lt;/p&gt;
-&lt;p style=&quot; margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2. If the Parse File Tpye - Auto Recognize is checked, there will be an optimation after the unzip progress, such as column name, datetime index, sort, etc.    &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -818,72 +789,106 @@ hr { height: 1px; border-width: 0; }
         <string>Data View</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>9</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0">
-           <widget class="QPushButton" name="pushButton_DataView_Open">
-            <property name="text">
-             <string>Open</string>
-            </property>
-           </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_DataView">
+          <property name="spacing">
+           <number>9</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_DataView_Button">
+            <item>
+             <widget class="QPushButton" name="pushButton_DataView_Open">
+              <property name="text">
+               <string>Open</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_DataView_Info">
+              <property name="text">
+               <string>Info</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_DataView_Null">
+              <property name="text">
+               <string>Null</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_DataView_Describe">
+              <property name="text">
+               <string>Describe</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_DataView_Scatter">
+              <property name="text">
+               <string>Scatter</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_DataView_KDE">
+              <property name="text">
+               <string>KDE</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_DataView_PairPlot">
+              <property name="text">
+               <string>PairPlot</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_DataView_CorrMap">
+              <property name="text">
+               <string>CorrMap</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_DataView_Feature">
+              <property name="text">
+               <string>Feature</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="pushButton_DataView_Info">
-            <property name="text">
-             <string>Info</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="pushButton_DataView_Null">
-            <property name="text">
-             <string>Null</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QPushButton" name="pushButton_DataView_Describe">
-            <property name="text">
-             <string>Describe</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="4">
-           <widget class="QPushButton" name="pushButton_DataView_Scatter">
-            <property name="text">
-             <string>Scatter</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="5">
-           <widget class="QPushButton" name="pushButton_DataView_KDE">
-            <property name="text">
-             <string>KDE</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="6">
-           <widget class="QPushButton" name="pushButton_DataView_PairPlot">
-            <property name="text">
-             <string>PairPlot</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="7">
-           <widget class="QPushButton" name="pushButton_DataView_CorrMap">
-            <property name="text">
-             <string>CorrMap</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="8">
-           <widget class="QPushButton" name="pushButton_DataView_Feature">
-            <property name="text">
-             <string>Feature</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="9">
+          <item>
            <widget class="QTableView" name="tableView_DataView">
             <property name="dragEnabled">
              <bool>true</bool>
