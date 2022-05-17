@@ -3,6 +3,7 @@ import importlib
 import inspect
 import os
 import sys
+from email import message
 
 import pandas as pd
 import seaborn
@@ -10,7 +11,7 @@ from loguru import logger
 from PyQt5 import QtGui
 from PyQt5.QtCore import QDate, QObject, QSize, Signal
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QFileDialog, QWidget
+from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox, QWidget
 from quant.core.file_parse_worker import FileParseConfig, FileParseWorker
 from quant.core.history_download_worker import (HistoryDownloadConfig, HistoryDownloadTimer, HistoryDownloadWorker)
 from quant.gui.CorrForm import CorrForm
@@ -83,10 +84,11 @@ class MainForm(QWidget, Ui_MainForm):
         self.gui.pushButton_DataView_Null.clicked.connect(self.data_view_null)
         self.gui.pushButton_DataView_Describe.clicked.connect(self.data_view_desc)
         self.gui.pushButton_DataView_Scatter.clicked.connect(self.data_view_scatter)
-        self.gui.pushButton_DataView_KDE.clicked.connect(self.data_view_kde)
+        self.gui.pushButton_DataView_Hist.clicked.connect(self.data_view_hist)
         self.gui.pushButton_DataView_PairPlot.clicked.connect(self.data_view_pairplot)
         self.gui.pushButton_DataView_CorrMap.clicked.connect(self.data_view_corrmap)
         self.gui.pushButton_DataView_Feature.clicked.connect(self.data_view_feature)
+        self.gui.pushButton_DataView_Kline.clicked.connect(self.data_view_kline)
 
         self.gui.pushButton_FileSplit.clicked.connect(self.file_split)
 
@@ -433,10 +435,10 @@ class MainForm(QWidget, Ui_MainForm):
         except Exception as err:
             logger.error(err)
 
-    def data_view_kde(self):
+    def data_view_hist(self):
         try:
             if self.data_view_df is not None:
-                self.graph_form.plot_kde(self.data_view_df['close'])
+                self.graph_form.plot_hist(self.data_view_df)
                 if (self.graph_form.isVisible()):
                     self.graph_form.activateWindow()
                 else:
@@ -484,3 +486,7 @@ class MainForm(QWidget, Ui_MainForm):
                 logger.info('please open and load CSV or Feather file at first.')
         except Exception as err:
             logger.error(err)
+
+    def data_view_kline(self):
+
+        QMessageBox.information(self, 'Welcome', 'please download and use the Kline Tools', QMessageBox.Yes)

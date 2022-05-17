@@ -45,7 +45,7 @@
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="tab_HistoryData">
        <attribute name="title">
@@ -859,9 +859,9 @@ etc.
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_DataView_KDE">
+             <widget class="QPushButton" name="pushButton_DataView_Hist">
               <property name="text">
-               <string>KDE</string>
+               <string>Hist</string>
               </property>
              </widget>
             </item>
@@ -883,6 +883,13 @@ etc.
              <widget class="QPushButton" name="pushButton_DataView_Feature">
               <property name="text">
                <string>Feature</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_DataView_Kline">
+              <property name="text">
+               <string>Kline</string>
               </property>
              </widget>
             </item>

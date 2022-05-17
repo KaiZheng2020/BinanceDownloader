@@ -35,8 +35,8 @@ class GraphForm(QWidget):
         df.plot.line(ax=ax)
         self.canvas.draw()
 
-    def plot_kde(self, df):
+    def plot_hist(self, df):
         self.figure.clear()
         self.ax = self.figure.add_subplot(111)
-        df.plot.kde(ax=self.ax)
+        df.hist(ax=self.ax)
         self.canvas.draw()
