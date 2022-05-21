@@ -1,14 +1,37 @@
+import functools
 import json
 import os
 import re
 import shutil
+import socket
 import sys
 import urllib.request
 from argparse import ArgumentParser, ArgumentTypeError, RawTextHelpFormatter
 from datetime import *
 from pathlib import Path
 
+from loguru import logger
+
 from .enums import *
+
+RETRY_COUNT = 20
+
+
+def deco_retry(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        _result = None
+        for _i in range(1, RETRY_COUNT + 1):
+            try:
+                _result = func(*args, **kwargs)
+                break
+            except Exception as e:
+                logger.warning(f"{func.__name__}: {_i} :{e}")
+                if _i == RETRY_COUNT:
+                    raise
+        return _result
+
+    return wrapper
 
 
 def get_destination_dir(file_url, folder=None):
@@ -24,6 +47,7 @@ def get_download_url(file_url):
     return "{}{}".format(BASE_URL, file_url)
 
 
+@deco_retry
 def get_all_symbols(type):
     if type == 'um':
         response = urllib.request.urlopen("https://fapi.binance.com/fapi/v1/exchangeInfo").read()
@@ -34,6 +58,7 @@ def get_all_symbols(type):
     return list(map(lambda symbol: symbol['symbol'], json.loads(response)['symbols']))
 
 
+@deco_retry
 def download_file(base_path, save_path, file_name, date_range=None, folder=None):
     download_path = "{}{}".format(base_path, file_name)
     if folder:
@@ -50,10 +75,9 @@ def download_file(base_path, save_path, file_name, date_range=None, folder=None)
     # make the directory
     if not os.path.exists(save_path):
         Path(get_destination_dir(save_path)).mkdir(parents=True, exist_ok=True)
-
     try:
         download_url = get_download_url(download_path)
-        dl_file = urllib.request.urlopen(download_url)
+        dl_file = urllib.request.urlopen(download_url, timeout=3)
         length = dl_file.getheader('content-length')
         if length:
             length = int(length)
@@ -71,10 +95,13 @@ def download_file(base_path, save_path, file_name, date_range=None, folder=None)
                 done = int(50 * dl_progress / length)
                 sys.stdout.write("\r[%s%s]" % ('#' * done, '.' * (50 - done)))
                 sys.stdout.flush()
-
-    except urllib.error.HTTPError:
-        print("\nFile not found: {}".format(download_url))
-        pass
+    except urllib.error.HTTPError as e:
+        logger.error(f'HTTPError: {download_url} {e.reason}')
+    except urllib.error.URLError as e:
+        logger.error(f'URLError: {download_url} {e.reason}')
+        if os.path.isfile(save_file_path):
+            os.remove(save_file_path)
+        raise
 
 
 def convert_to_date_object(d):

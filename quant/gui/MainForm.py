@@ -13,7 +13,9 @@ from PyQt5.QtCore import QDate, QObject, QSize, Signal
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox, QWidget
 from quant.core.file_parse_worker import FileParseConfig, FileParseWorker
-from quant.core.history_download_worker import (HistoryDownloadConfig, HistoryDownloadTimer, HistoryDownloadWorker)
+from quant.core.history_download_worker import (HistoryDownloadConfig,
+                                                HistoryDownloadTimer,
+                                                HistoryDownloadWorker)
 from quant.gui.CorrForm import CorrForm
 from quant.gui.DataFrameTableModel import DataFrameTableModel
 from quant.gui.GraphForm import GraphForm
@@ -217,14 +219,10 @@ class MainForm(QWidget, Ui_MainForm):
         if self.gui.checkBox_1d.isChecked():
             interval_list.append('1d')
 
-        proxy = None
-        if self.gui.checkBox_Proxy.isChecked():
-            proxy = self.gui.lineEdit_Proxy.text()
-
         config = HistoryDownloadConfig(trading_type_list, self.history_download_symbols, data_type_list, interval_list,
                                        self.gui.dateEdit_StartDate.date().toString('yyyy-MM-dd'),
-                                       self.gui.dateEdit_EndDate.date().toString('yyyy-MM-dd'), self.history_download_save_path,
-                                       proxy)
+                                       self.gui.dateEdit_EndDate.date().toString('yyyy-MM-dd'), self.history_download_save_path
+                                       )
 
         return config
 

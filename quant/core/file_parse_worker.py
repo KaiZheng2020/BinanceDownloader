@@ -52,7 +52,8 @@ class FileParseWorker(Thread):
                 try:
                     unzip(file)
                 except Exception as ex:
-                    logger.error(f'unzip fails: {file}')
+                    logger.error(f'unzip fails, remove: {file}')
+                    os.remove(file)
 
         for root, dirs, files in os.walk(self.config.src_path):
             content_df = pd.DataFrame()
@@ -75,7 +76,7 @@ class FileParseWorker(Thread):
                         ]
 
                         content_df['closetime'] = pd.to_datetime(content_df['datetime'], unit='ms')
-                        content_df.drop('ignore', inplace=True)
+                        content_df.drop(columns=['closetime', 'ignore'], inplace=True)
 
                     elif 'aggTrade' in root:
                         content_df.columns = [
